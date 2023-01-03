@@ -1,3 +1,6 @@
+// Example of using API keys, uses openWeatherAPI, so we'll need most of this information
+// https://coding-boot-camp.github.io/full-stack/apis/how-to-use-api-keys
+
 // Header in HTML
 // Search area in HTML
 // Landscape card containing current weather parameters for location
