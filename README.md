@@ -16,3 +16,9 @@
 // Sky condition (cloudy, etc.)
 
 
+// 5 day-cards style: hmmmmmmmmmmmmmmmmmmmmmmmm
+// use five different colors for cards (then use that blue and white from skis as the rest of the page?)
+// Use cards with rounded corners, the cliche?
+// Use circles for card shapes?
+// Could get really against-grain - maybe use different sized cards for each day?
+// CAN WE GET A LIVE-UPDATE RADAR??
