@@ -1,0 +1,39 @@
+header {
+
+    color: whitesmoke;
+    background-color: #621217;
+}
+
+#navSection {
+
+    height: 100vh;
+    background-color: #a8a499;
+    
+}
+
+#navSection h3 {
+
+    padding: 4px; 
+}
+
+#fiveDayForecast {
+
+    display: flex; 
+
+}
+
+#fiveDayForecast .card {
+
+    height: 15rem;
+    background-color: #9e7f5d; 
+    margin: 3px;
+    border-bottom-right-radius: 40%;
+    border-top-left-radius: 8%;
+
+}
+
+.card p {
+
+    border-bottom-right-radius: 5%;
+    border-top-left-radius: 5%
+}

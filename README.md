@@ -22,3 +22,9 @@
 // Use circles for card shapes?
 // Could get really against-grain - maybe use different sized cards for each day?
 // CAN WE GET A LIVE-UPDATE RADAR??
+// Can we add an individual HTML page that is link to in the 5-day cards? Maybe it autofills one generic HTML with the day's full-detail forecast
+
+
+// Make sure to add media-queries to allow use over multiple devices, as well as accessibility features for screen readers
+
+
