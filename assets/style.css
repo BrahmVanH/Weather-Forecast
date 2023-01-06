@@ -11,7 +11,7 @@ header {
     
 }
 
-#navSection h3 {
+#navSection h4 {
 
     padding: 4px; 
 }
@@ -22,10 +22,15 @@ header {
 
 }
 
+#currentWeather {
+
+    background-color: #9e7f5d;
+}
+
 #fiveDayForecast .card {
 
     height: 15rem;
-    background-color: #9e7f5d; 
+    background-color:#855e34 ; 
     margin: 3px;
     border-bottom-right-radius: 40%;
     border-top-left-radius: 8%;
