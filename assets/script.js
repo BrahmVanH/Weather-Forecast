@@ -29,31 +29,90 @@
       });
   }  */
 
-var cityInputEl = document.querySelector('#searchInput')
-var formEl = document.querySelector('#searchForm')
 
-function getApi(cityName) {
-
-    var requestUrl = 'api.openweathermap.org/data/2.5/forecast?q=' + cityName + '&appid=e943c609140455c43be229fc218f1f3a'
-
-    fetch(requestUrl)
-        .then(function (response) {
-            return response;
-        })
-        .then(function(data) {
-            console.log(cityName, data)
-        })
-}
-
+  
+  const apiUrl = 'http://api.openweathermap.org'
+  const apiKey = 'e943c609140455c43be229fc218f1f3a'
+  
+  var cityInputEl = document.getElementById('#searchInput');
+  var formEl = document.getElementById('#searchForm');
+  const searchBtn = $('#searchBtn');
+  
+  setInterval(timeUpdate, 1000);
+  
+  function timeUpdate() {
+      
+      const currentDate = dayjs().format('MMM D, YYYY');
+      const currentTime = dayjs().format('h:mm:ss a');
+  $('#currentDateTime').text(currentDate + '' + currentTime);
+  }
 
 function submitHandler(event) {
 
-    event.preventDefault();
+   
 
-    var cityName = cityInputEl.value.trim();
+    event.preventDefault();
+    var cityName = cityInputEl.val().trim();
+    getLatLon(cityName);
+    console.log('clicked');
 
 
 }
+
+
+
+
+function getLatLon(search) {
+
+  var url = apiUrl + '/geo/1.0/direct?q='+ search + '&limit=5&appid=' + apiKey;
+    fetch(url)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data){
+      if (!data[0]) {
+        alert('Location was not found!');
+      } else {
+        // addHistory(search)
+        getCityInfo(data[0]);
+        return;
+      }
+    })
+
+}
+
+function getCityInfo(cityData) {
+
+  var lat = cityData.lat;
+  var lon = cityData.lon;
+  var cityName = cityData.name;
+
+  var url = apiUrl +'/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey;
+  
+    fetch(url)
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          console.log(data.city.name);
+          console.log(data.list[0]);
+        })
+        .catch(function (err) {
+          console.error(err);
+        });
+    // console.log(url); 
+};
+
+
+
+
+searchBtn.click(submitHandler);
+
+  
+
+
+
+
 
 // create a few reusable variables containing main apiurl and apikey
 // Need a function to populate the current day weather card
