@@ -7,7 +7,7 @@ const apiKey = 'e943c609140455c43be229fc218f1f3a'
 
 var cityInputEl = document.querySelector('#searchInput');
 var formEl = document.querySelector('#searchForm');
-var searchBtnEl = document.querySelector('#searchBtn');
+var searchBtn = document.querySelector('#searchBtn');
 
   
   
@@ -95,8 +95,7 @@ function populateFiveDayForecast(weather, time) {
 
   for (let i = 1; i < 6; i++) {
 
-    var temp = parseInt(document.attribute('id').split('temperature')[i]);
-    var temp = document.getElementById('temperature[i]')
+    var temp = parseInt
     var windDirection = document.getElementById('windDirection' + [i]);
     var windSpeed = document.getElementById('windSpeed' + [i]);
     var humidity = document.getElementById('humidity' + [i]);
