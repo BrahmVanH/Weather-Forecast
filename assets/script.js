@@ -1,66 +1,36 @@
-
-/* function getApi() {
-    // fetch request gets a list of all the repos for the node.js organization
-    var requestUrl = 'https://api.github.com/orgs/nodejs/repos';
-  
-    fetch(requestUrl)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        console.log(data)
-        //Loop over the data to generate a table, each table row will have a link to the repo url
-        for (var i = 0; i < data.length; i++) {
-          // Creating elements, tablerow, tabledata, and anchor
-          var createTableRow = document.createElement('tr');
-          var tableData = document.createElement('td');
-          var link = document.createElement('a');
-  
-          // Setting the text of link and the href of the link
-          link.textContent = data[i].html_url;
-          link.href = data[i].html_url;
-  
-          // Appending the link to the tabledata and then appending the tabledata to the tablerow
-          // The tablerow then gets appended to the tablebody
-          tableData.appendChild(link);
-          createTableRow.appendChild(tableData);
-          tableBody.appendChild(createTableRow);
-        }
-      });
-  }  */
+dayjs.extend(window.dayjs_plugin_utc);
+dayjs.extend(window.dayjs_plugin_timezone);
 
 
+const apiUrl = 'http://api.openweathermap.org'
+const apiKey = 'e943c609140455c43be229fc218f1f3a'
+
+var cityInputEl = document.querySelector('#searchInput');
+var formEl = document.querySelector('#searchForm');
+var searchBtnEl = document.querySelector('#searchBtn');
+
   
-  const apiUrl = 'http://api.openweathermap.org'
-  const apiKey = 'e943c609140455c43be229fc218f1f3a'
   
-  var cityInputEl = document.getElementById('#searchInput');
-  var formEl = document.getElementById('#searchForm');
-  const searchBtn = $('#searchBtn');
+function timeUpdate() {
   
-  setInterval(timeUpdate, 1000);
+  const currentDate = dayjs().format('MMM D, YYYY');
+  const currentTime = dayjs().format('h:mm:ss a');
+  document.querySelector('#currentDateTime').textContent = currentDate + ' ' + currentTime;
+}
   
-  function timeUpdate() {
-      
-      const currentDate = dayjs().format('MMM D, YYYY');
-      const currentTime = dayjs().format('h:mm:ss a');
-  $('#currentDateTime').text(currentDate + '' + currentTime);
-  }
+setInterval(timeUpdate, 1000);
 
 function submitHandler(event) {
 
    
 
     event.preventDefault();
-    var cityName = cityInputEl.val().trim();
+    var cityName = cityInputEl.value.trim();
     getLatLon(cityName);
     console.log('clicked');
 
 
 }
-
-
-
 
 function getLatLon(search) {
 
@@ -87,15 +57,15 @@ function getCityInfo(cityData) {
   var lon = cityData.lon;
   var cityName = cityData.name;
 
-  var url = apiUrl +'/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey;
+  var url = apiUrl +'/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey + '&units=imperial';
   
     fetch(url)
         .then(function (response) {
           return response.json();
         })
         .then(function (data) {
-          console.log(data.city.name);
-          console.log(data.list[0]);
+          populateFiveDayForecast(data, data.timezone);
+          populateCurrentWeather(cityName, data, data.timezone)
         })
         .catch(function (err) {
           console.error(err);
@@ -103,10 +73,46 @@ function getCityInfo(cityData) {
     // console.log(url); 
 };
 
+function populateCurrentWeather(city, weather, time) {
+  var date = dayjs.tz(time).format('MMM D, YYYY');
+  var currentDate = document.querySelector('#date1');
+  var temp = document.querySelector('#temp1');
+  var windDirection = document.querySelector('#windDirection1');
+  var windSpeed = document.querySelector('#windSpeed1');
+  var humidity = document.querySelector('#humidity1');
+  currentDate.textContent = date;
+
+  temp.textContent = weather.list[0].main.temp
+  windDirection.textContent = weather.list[0].wind.deg;
+  windSpeed.textContent = weather.list[0].wind.speed;
+  humidity.textContent = weather.list[0].main.humidity
+
+  
+
+} 
+
+function populateFiveDayForecast(weather, time) {
+
+  for (let i = 1; i < 6; i++) {
+
+    var temp = parseInt(document.attribute('id').split('temperature')[i]);
+    var temp = document.getElementById('temperature[i]')
+    var windDirection = document.getElementById('windDirection' + [i]);
+    var windSpeed = document.getElementById('windSpeed' + [i]);
+    var humidity = document.getElementById('humidity' + [i]);
 
 
+    temp.textContent = weather.list[i].main.temp
+    windDirection.textContent = weather.list[i].wind.deg;
+    windSpeed.textContent = weather.list[i].wind.speed;
+    humidity.textContent = weather.list[i].main.humidity
+  }
 
-searchBtn.click(submitHandler);
+}
+
+
+searchBtn.addEventListener('click', submitHandler);
+
 
   
 
