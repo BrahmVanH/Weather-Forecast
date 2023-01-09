@@ -4,17 +4,37 @@ header {
     background-color: #621217;
 }
 
-#navSection {
+.main {
+    display: flex;
+    justify-content: center;
+    
 
-    height: 100vh;
+}
+
+ #navSection {
+
+
     background-color: #a8a499;
+   
     
 }
 
 #navSection h4 {
 
     padding: 4px; 
+
 }
+
+.landingPage {
+
+    margin-top: 15px;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    background-color: #a8a499;
+    
+}
+
 
 #fiveDayForecast {
 
@@ -36,6 +56,8 @@ header {
     border-top-left-radius: 8%;
 
 }
+
+
 
 .card p {
 

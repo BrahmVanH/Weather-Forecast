@@ -30,3 +30,10 @@
 // NEED TO MAKE HTML PAGE DYNAMIC AND ADD CARDS WHEN USER SEARCHES FOR WEATHER.
 
 
+// remove class main from jumbotron 
+// add class row to jumbotron
+// remove class display from navSection 
+// add display none to landing page 
+// remove class display from six day forecast
+
+

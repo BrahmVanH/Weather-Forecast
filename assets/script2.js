@@ -8,6 +8,7 @@ var cityInputEl = $('#searchInput');
 var formEl = $('#searchForm');
 var searchBtn = $('#searchBtn');
 
+
 function timeUpdate() {
     const currentDate = dayjs().format('MMM D, YYYY');
     const currentTime = dayjs().format('h:mm:ss a');
@@ -20,6 +21,7 @@ setInterval(timeUpdate, 1000);
 
 function submitSearch(event) {
     event.preventDefault();
+    moveNavSection();
 
     var cityName = cityInputEl.val().trim();
     getLatLon(cityName);
@@ -56,7 +58,7 @@ function getCityInfo(cityData) {
     var cityName = cityData.name;
   
     var url = apiUrl +'/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey + '&units=imperial';
-    
+    // var url = apiUrl + '/data/2.5/forecast?lat='+ lat + '&lon=' + lon + '&appid=' + apiKey + '&units=imperial';
       fetch(url)
           .then(function (response) {
             return response.json();
@@ -198,4 +200,17 @@ function populateFiveDayForecast(weather, time) {
         })
     } */
 
-searchBtn.on('click', submitSearch);
+    
+    function moveNavSection() {
+      
+      $('.jumbotron').removeClass('main');
+      $('.jumbotron').addClass('d-flex');
+      $('#navSection').removeClass();
+      $('#navSection').css('height', '100vh');
+      $('#navSection').addClass('container');
+      $('#nevSection').addClass('col-2')
+      $('#sixDayForecast').removeClass('d-none');
+    }
+    
+    searchBtn.on('click', submitSearch);
+    
