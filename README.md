@@ -37,3 +37,10 @@
 // remove class display from six day forecast
 
 
+TO DO
+
+// Make search require state information
+// Need to make a list of search history using local storage
+//
+
+
