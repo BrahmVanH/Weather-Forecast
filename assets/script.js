@@ -200,6 +200,8 @@ function populateFiveDayForecast(weather) {
   } 
 
   // Function to move the search bar to the left side of the page to make room for the forecast cards  
+  // This removes the existing classes and adds new classes to change the style
+  // Removes the display: none class from the main content div
 
 function moveNavSection() {
   
@@ -208,7 +210,8 @@ function moveNavSection() {
   $('#navSection').removeClass();
   $('#navSection').css('height', '100vh');
   $('#navSection').addClass('container');
-  $('#nevSection').addClass('col-2')
+  $('#navSection').addClass('col-2');
+  $('#navSection').addClass('navSection');
   $('#sixDayForecast').removeClass('d-none');
 }
 

@@ -11,10 +11,10 @@ header {
 
 }
 
- #navSection {
+.navSection {
 
 
-    background-color: #a8a499;
+background-color: #a8a499;
    
     
 }
@@ -31,7 +31,9 @@ header {
     width: 80%;
     display: flex;
     justify-content: center;
-    background-color: #a8a499;
+    background-color: #855e34;
+    border-radius: 1%;
+
     
 }
 
