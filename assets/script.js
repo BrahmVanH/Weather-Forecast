@@ -88,8 +88,7 @@ function submitSearch(event) {
 function getLatLon(search) {
 
     var url = apiUrl + '/geo/1.0/direct?q='+ search + '&limit=5&appid=' + apiKey;
-    fetch(url, {
-      credentials: 'same-origin'})
+    fetch(url)
     .then(function(response) {
       return response.json();
       
