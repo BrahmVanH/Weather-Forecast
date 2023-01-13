@@ -59,6 +59,11 @@ background-color: #a8a499;
 
 }
 
+.forecast img {
+
+    height: 50px;
+    width: 50px;
+}
 
 
 .card p {

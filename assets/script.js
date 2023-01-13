@@ -136,44 +136,58 @@ function getCityInfo(cityData) {
 
 function populateCurrentWeather(city, weather) {
   
-  var currentDate = $('#date1');
-  var temp = $('#temp1');
-  var windDirection = $('#windDirection1');
-  var windSpeed = $('#windSpeed1');
-  var humidity = $('#humidity1');
-  
+  var currentDate = $('#date');
+  var temp = $('#temp');
+  var windDirection = $('#windDirection');
+  var windSpeed = $('#windSpeed');
+  var humidity = $('#humidity');
+  var weatherImg = $('#weatherImg');
+  var iconId = weather.list[0].weather[0].icon
+    
   currentDate.text(date);
   temp.text(weather.list[0].main.temp)
   windDirection.text(weather.list[0].wind.deg);
   windSpeed.text(weather.list[0].wind.speed);
   humidity.text(weather.list[0].main.humidity);
+  weatherImg.attr('src', `https://openweathermap.org/img/wn/${iconId}@2x.png` );
 
 }
 
+function getWeatherIcon() {
+
+
+
+
+}
 
 // Function to populate the five day forecast cards
 // Uses a for-loop to iterate through a slice of the weather data array and update the five-day forecast
 
 function populateFiveDayForecast(weather) {
   
-  var date = dayjs().format('MMM D, YYYY');
-  var nextFive = weather.list.slice(1, 8);
-  date2.text(dayjs(date).add(1, 'day').format('MMM D'));
-  for (let i = 0; i < nextFive.length; i++) {
-
+  var currentDate = dayjs().format('MMM D, YYYY');
+  var nextFive = weather.list.slice(1, 7);
+  
+  for (let i = 1; i <= nextFive.length; i++) {
+    
     let date = $(`#date${i}`);
-    let temp = $(`temp${i}`);
+    let temp = $(`#temp${i}`);
     let windDirection = $(`#windDirection${i}`);
     let windSpeed = $(`#windSpeed${i}`);
     let humidity = $(`#humidity${i}`); 
+    let imageIcon = $(`#weatherImg${i}`);
+    let iconId = weather.list[i].weather[0].icon;
     
+    date.text(dayjs(currentDate).add(i, 'day').format('MMM D'));
     temp.text(weather.list[i].main.temp);
     windDirection.text(weather.list[i].wind.deg);
     windSpeed.text(weather.list[i].wind.speed);
     humidity.text(weather.list[i].main.humidity); 
+    imageIcon.attr('src', `https://openweathermap.org/img/wn/${iconId}@2x.png`)
 
 
   }
+}
   
   // Function to move the search bar to the left side of the page to make room for the forecast cards  
   // This removes the existing classes and adds new classes to change the style
@@ -241,16 +255,10 @@ function useSearchHistory(e) {
   var btn = e.target;
   var search = btn.getAttribute("data-name");
   getLatLon(search);
-};
+}
 // Creating a clickable button on the search button 
 // Calls retrieveHistory on page load to create history buttons
 
 searchBtn.on('click', submitSearch);
 recentSearchEl.on('click', useSearchHistory);
 retrieveHistory();
-
-
-
-
-
-    
