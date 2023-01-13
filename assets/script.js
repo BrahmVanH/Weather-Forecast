@@ -12,6 +12,7 @@ const apiKey = 'e943c609140455c43be229fc218f1f3a';
 var cityInputEl = $('#searchInput');
 var formEl = $('#searchForm');
 var searchBtn = $('#searchBtn');
+var recentSearchEl = $('#recentSearch')
 var cities = [];
 var date = dayjs().format('MMM D, YYYY');
 
@@ -235,7 +236,7 @@ function renderButtons() {
 
   
   
-  $("#recent-search").empty();
+  recentSearchEl.empty();
 
 
   for (var i = 0; i < cities.length; i++) {
@@ -252,15 +253,28 @@ function renderButtons() {
     localStorage.setItem("Search Result", cities);
 
     
-    $("#recent-search").append(a);
+    recentSearchEl.append(a);
   }
 }
 
+function useSearchHistory(e) {
+  moveNavSection();
+   
+
+  if (!e.target.matches("button.city-name")) {
+    return;
+  };
+  var btn = e.target;
+  var search = btn.getAttribute("data-name");
+  getLatLon(search);
+};
 // Creating a clickable button on the search button 
 // Calls retrieveHistory on page load to create history buttons
 
 searchBtn.on('click', submitSearch);
+recentSearchEl.on('click', useSearchHistory);
 retrieveHistory();
+
 
 
 
