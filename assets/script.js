@@ -120,6 +120,7 @@ function getCityInfo(cityData) {
           return response.json();
         })
         .then(function (data) {
+          console.log(data)
           populateFiveDayForecast(data);
           populateCurrentWeather(cityName, data)
 
@@ -151,56 +152,29 @@ function populateCurrentWeather(city, weather) {
 
 
 // Function to populate the five day forecast cards
+// Uses a for-loop to iterate through a slice of the weather data array and update the five-day forecast
 
 function populateFiveDayForecast(weather) {
- 
-  date = dayjs().format('MMM D, YYYY')
-  // Dates 
-    
+  
+  var date = dayjs().format('MMM D, YYYY');
+  var nextFive = weather.list.slice(1, 8);
   date2.text(dayjs(date).add(1, 'day').format('MMM D'));
-  date3.text(dayjs(date).add(2, 'day').format('MMM D'));
-  date4.text(dayjs(date).add(3, 'day').format('MMM D'));
-  date5.text(dayjs(date).add(4, 'day').format('MMM D'));
-  date6.text(dayjs(date).add(5, 'day').format('MMM D'));
+  for (let i = 0; i < nextFive.length; i++) {
+
+    let date = $(`#date${i}`);
+    let temp = $(`temp${i}`);
+    let windDirection = $(`#windDirection${i}`);
+    let windSpeed = $(`#windSpeed${i}`);
+    let humidity = $(`#humidity${i}`); 
+    
+    temp.text(weather.list[i].main.temp);
+    windDirection.text(weather.list[i].wind.deg);
+    windSpeed.text(weather.list[i].wind.speed);
+    humidity.text(weather.list[i].main.humidity); 
+
+
+  }
   
-  
-  // Temps  
-  
-  temp2.text(weather.list[1].main.temp);
-  temp3.text(weather.list[2].main.temp);
-  temp4.text(weather.list[3].main.temp);
-  temp5.text(weather.list[4].main.temp);
-  temp6.text(weather.list[5].main.temp);
-
-   // Wind direction
-   
-   
-  windDirection2.text(weather.list[1].wind.deg);
-  windDirection3.text(weather.list[2].wind.deg);
-  windDirection4.text(weather.list[3].wind.deg);
-  windDirection5.text(weather.list[4].wind.deg);
-  windDirection6.text(weather.list[5].wind.deg);
-
-   // Wind speed
-
-   
-  windSpeed2.text(weather.list[1].wind.speed);
-  windSpeed3.text(weather.list[2].wind.speed);
-  windSpeed4.text(weather.list[3].wind.speed);
-  windSpeed5.text(weather.list[4].wind.speed);
-  windSpeed6.text(weather.list[5].wind.speed);
-
-  // Humidity
-
-  
-  humidity2.text(weather.list[1].main.humidity);
-  humidity3.text(weather.list[2].main.humidity);
-  humidity4.text(weather.list[3].main.humidity);
-  humidity5.text(weather.list[4].main.humidity);
-  humidity6.text(weather.list[5].main.humidity);
-
-  } 
-
   // Function to move the search bar to the left side of the page to make room for the forecast cards  
   // This removes the existing classes and adds new classes to change the style
   // Removes the display: none class from the main content div
