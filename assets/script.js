@@ -17,35 +17,6 @@ var cities = [];
 var date = dayjs().format('MMM D, YYYY');
 
 
-var date2 = $('#date2');
-var date3 = $('#date3');
-var date4 = $('#date4');
-var date5 = $('#date5');
-var date6 = $('#date6');
-
-var temp2 = $('#temp2');
-var temp3 = $('#temp3');
-var temp4 = $('#temp4');
-var temp5 = $('#temp5');
-var temp6 = $('#temp6');
-
-var windDirection2 = $('#windDirection2');
-var windDirection3 = $('#windDirection3');
-var windDirection4 = $('#windDirection4');
-var windDirection5 = $('#windDirection5');
-var windDirection6 = $('#windDirection6');
-
-var windSpeed2 = $('#windSpeed2');
-var windSpeed3 = $('#windSpeed3');
-var windSpeed4 = $('#windSpeed4');
-var windSpeed5 = $('#windSpeed5');
-var windSpeed6 = $('#windSpeed6');
-
-var humidity2 = $('#humidity2');
-var humidity3 = $('#humidity3');
-var humidity4 = $('#humidity4');
-var humidity5 = $('#humidity5');
-var humidity6 = $('#humidity6');
 
    
 
@@ -142,15 +113,19 @@ function populateCurrentWeather(city, weather) {
   var windSpeed = $('#windSpeed');
   var humidity = $('#humidity');
   var weatherImg = $('#weatherImg');
-  var iconId = weather.list[0].weather[0].icon
+  var iconId = weather.list[0].weather[0].icon;
+  var feelsLike = $('#feelsLike');
+  var highLowTemp = $('#highLowTemp');
+
     
-  currentDate.text(date);
+  currentDate.text(city + ' ' + date);
   temp.text(weather.list[0].main.temp)
   windDirection.text(weather.list[0].wind.deg);
   windSpeed.text(weather.list[0].wind.speed);
   humidity.text(weather.list[0].main.humidity);
   weatherImg.attr('src', `https://openweathermap.org/img/wn/${iconId}@2x.png` );
-
+  feelsLike.text(weather.list[0].main.feels_like);
+highLowTemp.text(weather.list[0].main.temp_max + '°F/' + weather.list[0].main.temp_min + '°F');
 }
 
 function getWeatherIcon() {
@@ -234,6 +209,7 @@ function renderButtons() {
     a.addClass("city-name");
     
     a.attr("data-name", cities[i]);
+    a.css('border-radius', '5px');
     
     a.text(cities[i]);
 

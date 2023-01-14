@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <link
@@ -21,7 +22,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/plugin/utc.min.js" integrity="sha512-m00bfmYnAl3plEBlQfeQUhw/U2uvmw29V2+jxSWpAjankMWS+zAsjezbKWDEJNXqWq9o9qQZSOiA2RKDpa4D5w==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/plugin/timezone.min.js" integrity="sha512-pslqxxHAYPCxaSeFSmXXxDkLejD5dbFVC66aiVq0z4v7VTJBU+wqcG1OpNh4p3MjS2D6NCwz/H2QmSc7dXxryg==" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="./assets/style.css">
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Quicksand&display=swap" rel="stylesheet">
   <title>Weather Forecast</title>
 </head>
 <body>
@@ -38,7 +41,7 @@
               <h4>Weather Search</h4>
               <form id="searchForm" class="form w-100">
                 <input id="searchInput" class="form-input w-100" type="text" placeholder="Enter City">
-                <button class="btn btn-info btn-block" type="button" id="searchBtn">Search</button>
+                <button type="button" id="searchBtn">Search</button>
               </form>
 
               <div id="recentSearch">
@@ -52,10 +55,12 @@
             
             <div class="container" id="currentWeather">
                 <h2 id="date"></h2>
-                <img id="weatherImg"></img>
-                <p>Temp: <span id="temp"></span>°F</p>
+                <p>It is currently <span id="temp"></span>°F </p>
+                <p id="highLowTemp"></p>
+                <p>Feels Like: <span id="feelsLike"></span>°F</p>
                 <p>Wind: <span id="windDirection"></span>° @ <span id="windSpeed"></span> MPH</p>
                 <p>Humidity: <span id="humidity"></span>%</p>
+                <img id="weatherImg"></img>
             </div>
             <div class="row" id="fiveDayForecast">
                 
