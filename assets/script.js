@@ -9,12 +9,13 @@ const apiKey = 'e943c609140455c43be229fc218f1f3a';
 
 // Variables to be used later in script
 
-var cityInputEl = $('#searchInput');
-var formEl = $('#searchForm');
-var searchBtn = $('#searchBtn');
-var recentSearchEl = $('#recentSearch')
-var cities = [];
-var date = dayjs().format('MMM D, YYYY');
+const cityInputEl = $('#searchInput');
+const formEl = $('#searchForm');
+const searchBtn = $('#searchBtn');
+const recentSearchEl = $('#recentSearch')
+const cities = [];
+const date = dayjs().format('MMM D, YYYY');
+const currentWeather = $('#currentWeather');
 
 
 
@@ -46,7 +47,7 @@ function retrieveHistory() {
 
 function submitSearch(event) {
     event.preventDefault();
-    moveNavSection();
+    moveSearchSection();
     clearResultsField;
 
     var cityName = cityInputEl.val().trim();
@@ -93,7 +94,8 @@ function getCityInfo(cityData) {
         .then(function (data) {
           console.log(data)
           populateFiveDayForecast(data);
-          populateCurrentWeather(cityName, data)
+         // populateCurrentWeather(cityName, data)
+         createCurrentWeatherSection(cityName, data)
 
           console.log(data);
         })
@@ -105,7 +107,7 @@ function getCityInfo(cityData) {
 
   // Uses the data from getCityInfo as parameters to identify city name, our weather data, and timezone
 
-function populateCurrentWeather(city, weather) {
+/*function populateCurrentWeather(city, weather) {
   
   var currentDate = $('#date');
   var temp = $('#temp');
@@ -123,17 +125,46 @@ function populateCurrentWeather(city, weather) {
   windDirection.text(weather.list[0].wind.deg);
   windSpeed.text(weather.list[0].wind.speed);
   humidity.text(weather.list[0].main.humidity);
-  weatherImg.attr('src', `https://openweathermap.org/img/wn/${iconId}@2x.png` );
+  weatherImg.attr('src', `https://openweathermap.org/img/wn/${iconId}@2x.png`);
   feelsLike.text(weather.list[0].main.feels_like);
 highLowTemp.text(weather.list[0].main.temp_max + '°F/' + weather.list[0].main.temp_min + '°F');
+} */
+
+
+function createCurrentWeatherSection(city, weather) {
+
+  var currentDate = $('<h2>');
+  var temp = $('<p>');
+  var wind = $('<p>');
+  var windSpeed = $('<span>');
+  var windDirection = $('<span>');
+  var humidity = $('<p>');
+  var weatherImg = $('<img>');
+  var feelsLike = $('<p>');
+  
+  var iconId = weather.list[0].weather[0].icon;
+
+
+  
+  currentDate.text(city + ' ' + date);
+  temp.text('Todays temperatures: ' + weather.list[0].main.temp + ' (' + weather.list[0].main.temp_max + '°F/' + weather.list[0].main.temp_min + '°F)');
+  windDirection.text(weather.list[0].wind.deg);
+  windSpeed.text(weather.list[0].wind.speed);
+  wind.append('Wind: ', windDirection, '° @ ', windSpeed, ' MPH');
+  humidity.text('Humidity: ' + weather.list[0].main.humidity);
+  weatherImg.attr('src', `https://openweathermap.org/img/wn/${iconId}@2x.png`);
+  feelsLike.text('Feels like: ' + weather.list[0].main.feels_like);
+  
+  
+  currentWeather.append(currentDate, temp, feelsLike, wind, humidity, weatherImg)
+
+
+
+
 }
 
-function getWeatherIcon() {
 
 
-
-
-}
 
 // Function to populate the five day forecast cards
 // Uses a for-loop to iterate through a slice of the weather data array and update the five-day forecast
@@ -168,15 +199,15 @@ function populateFiveDayForecast(weather) {
   // This removes the existing classes and adds new classes to change the style
   // Removes the display: none class from the main content div
 
-function moveNavSection() {
+function moveSearchSection() {
   
   $('.jumbotron').removeClass('main');
   $('.jumbotron').addClass('d-flex');
-  $('#navSection').removeClass();
-  $('#navSection').css('height', '100vh');
-  $('#navSection').addClass('container');
-  $('#navSection').addClass('col-2');
-  $('#navSection').addClass('navSection');
+  $('#searchSection').removeClass();
+  $('#searchSection').css('height', '100vh');
+  $('#searchSection').addClass('container');
+  $('#searchSection').addClass('col-2');
+  $('#searchSection').addClass('searchSection');
   $('#sixDayForecast').removeClass('d-none');
 }
 
@@ -222,7 +253,7 @@ function renderButtons() {
 }
 
 function useSearchHistory(e) {
-  moveNavSection();
+  moveSearchSection();
    
 
   if (!e.target.matches("button.city-name")) {

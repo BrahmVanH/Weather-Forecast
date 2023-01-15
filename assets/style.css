@@ -6,8 +6,9 @@
 header {
 
     color: whitesmoke;
-    background-color: #621217;
+    background-color: black;
 }
+
 
 .main {
     display: flex;
@@ -16,7 +17,7 @@ header {
 
 }
 
-.navSection {
+.searchSectionection {
 
 
 background-color: #a8a499;
@@ -25,7 +26,7 @@ border-radius: 5px;
     
 }
 
-#navSection h4 {
+#searchSection h4 {
 
     padding: 4px; 
 
