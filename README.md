@@ -25,3 +25,7 @@ N/A
 # License
 
 Please refer to license in Repo.
+
+
+https://www.weather.gov/documentation/services-web-api#/
+https://www.weather.gov/gis/ZoneCounty
