@@ -1,3 +1,4 @@
+
 // Plugins to be used later in script
 dayjs.extend(window.dayjs_plugin_utc);
 dayjs.extend(window.dayjs_plugin_timezone);
@@ -16,6 +17,7 @@ const recentSearchEl = $('#recentSearch')
 const cities = [];
 const date = dayjs().format('MMM D, YYYY');
 const currentWeather = $('#currentWeather');
+const currentWeatherGeo = $('#currentWeatherGeo');
 
 
 
@@ -35,77 +37,69 @@ setInterval(timeUpdate, 1000);
 
 // Function to scan local storage for search history and populate the page with recent searches
 
-function retrieveHistory() {
-  var retrieveHistory = localStorage.getItem("Search Result");
-
-  if (retrieveHistory) {
-    cities = retrieveHistory.split(",");
-    renderButtons();
-  }
-}
 // Function to handle the submission of the user entry
 
 function submitSearch(event) {
-    event.preventDefault();
-    moveSearchSection();
-    clearResultsField;
-
-    var cityName = cityInputEl.val().trim();
-    getLatLon(cityName);
-    console.log('clicked');
-
+  event.preventDefault();
+  // moveSearchSection();
+  clearResultsField();
+  
+  var cityName = cityInputEl.val().trim();
+  getLatLon(cityName);
+  console.log('clicked');
+  
 }
 
 // Function to retrieve latitude and longitude data about city in search and passes on to getGetCity info to retrieve the weather data
 
 function getLatLon(search) {
-
-    var url = apiUrl + '/geo/1.0/direct?q='+ search + '&limit=5&appid=' + apiKey;
-    fetch(url)
-    .then(function(response) {
-      return response.json();
+  
+  var url = apiUrl + '/geo/1.0/direct?q='+ search + '&limit=5&appid=' + apiKey;
+  fetch(url)
+  .then(function(response) {
+    return response.json();
       
-    })
-    .then(function(data){
-      if (!data[0]) {
-        alert('Location was not found!');
-      } else {
-        // addHistory(search)
-        getCityInfo(data[0]);
-        return;
-      }
-    })
+  })
+  .then(function(data){
+    if (!data[0]) {
+      alert('Location was not found!');
+    } else {
+      // addHistory(search)
+      getCityInfo(data[0]);
+      return;
+    }
+  })
 }
 
 // Function to use the returned latitude and longitude data to search for and retrieve weather data from API
 
 function getCityInfo(cityData) {
-
+  
   var lat = cityData.lat;
   var lon = cityData.lon;
   var cityName = cityData.name;
-
+  
   var url = apiUrl +'/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&appid=' + apiKey + '&units=imperial';
   
-    fetch(url)
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (data) {
-          console.log(data)
-          populateFiveDayForecast(data);
-         // populateCurrentWeather(cityName, data)
-         createCurrentWeatherSection(cityName, data)
-
-          console.log(data);
-        })
-        .catch(function (err) {
-          console.error(err);
-        });
+  fetch(url)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data)
+    populateFiveDayForecast(data);
+    // populateCurrentWeather(cityName, data)
+    createCurrentWeatherSection(cityName, data)
+    
+    console.log(data);
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
   
 }
 
-  // Uses the data from getCityInfo as parameters to identify city name, our weather data, and timezone
+// Uses the data from getCityInfo as parameters to identify city name, our weather data, and timezone
 
 /*function populateCurrentWeather(city, weather) {
   
@@ -118,8 +112,8 @@ function getCityInfo(cityData) {
   var iconId = weather.list[0].weather[0].icon;
   var feelsLike = $('#feelsLike');
   var highLowTemp = $('#highLowTemp');
-
-    
+  
+  
   currentDate.text(city + ' ' + date);
   temp.text(weather.list[0].main.temp)
   windDirection.text(weather.list[0].wind.deg);
@@ -127,12 +121,12 @@ function getCityInfo(cityData) {
   humidity.text(weather.list[0].main.humidity);
   weatherImg.attr('src', `https://openweathermap.org/img/wn/${iconId}@2x.png`);
   feelsLike.text(weather.list[0].main.feels_like);
-highLowTemp.text(weather.list[0].main.temp_max + '°F/' + weather.list[0].main.temp_min + '°F');
+  highLowTemp.text(weather.list[0].main.temp_max + '°F/' + weather.list[0].main.temp_min + '°F');
 } */
 
 
 function createCurrentWeatherSection(city, weather) {
-
+  
   var currentDate = $('<h2>');
   var temp = $('<p>');
   var wind = $('<p>');
@@ -143,8 +137,8 @@ function createCurrentWeatherSection(city, weather) {
   var feelsLike = $('<p>');
   
   var iconId = weather.list[0].weather[0].icon;
-
-
+  
+  
   
   currentDate.text(city + ' ' + date);
   temp.text('Todays temperatures: ' + weather.list[0].main.temp + ' (' + weather.list[0].main.temp_max + '°F/' + weather.list[0].main.temp_min + '°F)');
@@ -157,10 +151,24 @@ function createCurrentWeatherSection(city, weather) {
   
   
   currentWeather.append(currentDate, temp, feelsLike, wind, humidity, weatherImg)
+  
+  
+  
+  
+}
 
+//Function to get current weather for location of user based on browser location
 
+function getCurrentWeatherGeo() {
 
+  getLocalWeather();
 
+}
+
+function getLocalWeather() {
+
+  url = 
+  fetch(url)
 }
 
 
@@ -190,16 +198,16 @@ function populateFiveDayForecast(weather) {
     windSpeed.text(weather.list[i].wind.speed);
     humidity.text(weather.list[i].main.humidity); 
     imageIcon.attr('src', `https://openweathermap.org/img/wn/${iconId}@2x.png`)
-
-
+    
+    
   }
 }
-  
-  // Function to move the search bar to the left side of the page to make room for the forecast cards  
-  // This removes the existing classes and adds new classes to change the style
-  // Removes the display: none class from the main content div
 
-function moveSearchSection() {
+// Function to move the search bar to the left side of the page to make room for the forecast cards  
+// This removes the existing classes and adds new classes to change the style
+// Removes the display: none class from the main content div
+
+/*function moveSearchSection() {
   
   $('.jumbotron').removeClass('main');
   $('.jumbotron').addClass('d-flex');
@@ -209,32 +217,32 @@ function moveSearchSection() {
   $('#searchSection').addClass('col-2');
   $('#searchSection').addClass('searchSection');
   $('#sixDayForecast').removeClass('d-none');
-}
+} */
 
-  // Function to clear the results field when searching for a new city from the same page
+// Function to clear the results field when searching for a new city from the same page
 
 function clearResultsField() {
-
+  
   date1.siblings().text('');
   date2.siblings().text('');
   date3.siblings().text('');
   date4.siblings().text('');
   date5.siblings().text('');
   date6.siblings().text('');
-
+  
 }
-    
-    
+
+
 // Function to create buttons on page representing recent search history
 function renderButtons() {
-
+  
   
   
   recentSearchEl.empty();
-
-
+  
+  
   for (var i = 0; i < cities.length; i++) {
-
+    
     var a = $("<button>");
     
     a.addClass("city-name");
@@ -243,19 +251,27 @@ function renderButtons() {
     a.css('border-radius', '5px');
     
     a.text(cities[i]);
-
+    
     var history = localStorage.getItem("Search Result") || 0;
     localStorage.setItem("Search Result", cities);
-
+    
     
     recentSearchEl.append(a);
   }
 }
 
+function retrieveHistory() {
+  var retrieveHistory = localStorage.getItem("Search Result");
+
+  if (retrieveHistory) {
+    cities = retrieveHistory.split(",");
+    renderButtons();
+  }
+}
 function useSearchHistory(e) {
   moveSearchSection();
-   
-
+  
+  
   if (!e.target.matches("button.city-name")) {
     return;
   };

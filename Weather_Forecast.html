@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="stylesheet" src="./assets/style.css"></style>
+    <title>Document</title>
+</head>
+<body>
+
+    <main id="main-content">
+
+    <div class="col-2" id="searchSection">
+        <h4>Weather Search</h4>
+        <form id="searchForm" class="form w-100">
+          <input id="searchInput" class="form-input w-100" type="text" placeholder="Enter City">
+          <button type="button" id="searchBtn">Search</button>
+        </form>
+      </div>
+
+    <div class="container col-10" id="sixDayForecast">
+            
+        <div class="container" id="currentWeather">
+           <!-- <h2 id="date"></h2>
+            <p>It is currently <span id="temp"></span>°F </p>
+            <p id="highLowTemp"></p>
+            <p>Feels Like: <span id="feelsLike"></span>°F</p>
+            <p>Wind: <span id="windDirection"></span>° @ <span id="windSpeed"></span> MPH</p>
+            <p>Humidity: <span id="humidity"></span>%</p>
+            <img id="weatherImg"></img> -->
+        </div> 
+        <div class="row" id="fiveDayForecast">
+            
+            <div class="forecast card col" id="forecastDay2">
+                <h2 id="date1"></h2>
+                <img id="weatherImg1"></img>
+                <p>Temp: <span class="temp" id="temp1"></span>°F</p>
+                <p>Wind: <span class="windDirection1" id="windDirection1"></span>° @ <span class="windSpeed" id="windSpeed1"></span> MPH</p>
+                <p>Humidity: <span class="humidity" id="humidity1"></span>%</p>
+            </div>
+            
+            <div class="forecast card col" id="forecastDay3">
+                <h2 id="date2"></h2>
+                <img id="weatherImg2"></img>
+                <p>Temp: <span id="temp2"></span>°F</p>
+                <p>Wind: <span id="windDirection2"></span>° @ <span id="windSpeed2"></span> MPH</p>
+                <p>Humidity: <span id="humidity2"></span>%</p>
+            </div>
+            
+            <div class="forecast card col" id="forecastDay4">
+                <h2 id="date3"></h2>
+                <img id="weatherImg3"></img>
+                <p>Temp: <span id="temp3"></span>°F</p>
+                <p>Wind: <span id="windDirection3"></span>° @ <span id="windSpeed3"></span> MPH</p>
+                <p>Humidity: <span id="humidity3"></span>%</p>
+            </div>
+            
+            <div class="forecast card col" id="forecastDay5">
+                <h2 id="date4"></h2>
+                <img id="weatherImg4"></img>
+                <p>Temp: <span id="temp4"></span>°F</p>
+                <p>Wind: <span id="windDirection4"></span>° @ <span id="windSpeed4"></span> MPH</p>
+                <p>Humidity: <span id="humidity4"></span>%</p>
+            </div>
+            
+            <div class="forecast card col" id="forecastDay6">
+                <h2 id="date5"></h2>
+                <img id="weatherImg5"></img>
+                <p>Temp: <span id="temp5"></span>°F</p>
+                <p>Wind: <span id="windDirection5"></span>° @ <span id="windSpeed5"></span> MPH</p>
+                <p>Humidity: <span id="humidity5"></span>%</p>
+            </div>
+        </div>
+
+    </main>
+
+        <script src="./assets/script.js"></script>
+        <script src="./assets/Zones_Handler.js"></script>
+</body>
+</html>
