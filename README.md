@@ -1,5 +1,11 @@
 ## Weather Forecast
 
+
+**NEED TO DO:
+  Change *enter* to search instead of clear text input
+  Add option to pick up browsers local weather
+  
+
 # Description
 
 This application is designed to allow the user to search for any city in the world with weather data and retrieve a five-day weather forecast for that city.
