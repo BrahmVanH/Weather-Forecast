@@ -1,3 +1,5 @@
+const dayjs = require("dayjs");
+
 const openWeatherApiUrl = 'http://api.openweathermap.org';
 const openWeatherApiKey = 'e943c609140455c43be229fc218f1f3a';
 
@@ -180,7 +182,8 @@ function getZoneData(responsibleZonesUrl) {
 }
 
 function getExtendedForecast(observationZone) {
-
+       dateAndTime = dayjs().format('YYYY-MM-DDTHH:mm:ss.SSSZZ')
+       dateAndTimePlusFive = dateAndTime.add(9, 'day')
   //Dont forget to switch this value out with the zone from the function that gets the zone
   let dateAndTime = "2023-02-23T21:3A14:3A10.000-0500"
   let dateAndTimePlusFive = "end=2023-02-27T21%3A14%3A10.000-0500"
