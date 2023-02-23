@@ -1,0 +1,10 @@
+ON PAGE LOAD, MAIN CONTENT (CURRENT WEATHER PULLED FROM BROWSER LOCATION) FADES IN AFTER REST OF PAGE LOADS GSAP**
+
+
+GET BROWSER-BASED GEOLOCATION API
+MAPBOX
+FOREWARD GEOCODING
+try scraping data from ski hill conditions reports
+
+considerations for use:
+how much data I need vs how much Im getting (loading speed)

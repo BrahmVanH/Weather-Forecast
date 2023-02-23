@@ -1,116 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home - WeatherNow.</title>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-    crossorigin="anonymous"
-  />
-  <link
-    rel="stylesheet"
-    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-    crossorigin="anonymous"
-  />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/plugin/utc.min.js" integrity="sha512-m00bfmYnAl3plEBlQfeQUhw/U2uvmw29V2+jxSWpAjankMWS+zAsjezbKWDEJNXqWq9o9qQZSOiA2RKDpa4D5w==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/plugin/timezone.min.js" integrity="sha512-pslqxxHAYPCxaSeFSmXXxDkLejD5dbFVC66aiVq0z4v7VTJBU+wqcG1OpNh4p3MjS2D6NCwz/H2QmSc7dXxryg==" crossorigin="anonymous"></script>
-  <link rel="stylesheet" type="text/css" href="./assets/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Quicksand&display=swap" rel="stylesheet">
-  <title>Weather Forecast</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
 </head>
-<body>
-    <header>
-        <h1>WeatherNow</h1>
-        <p>It is currently <span id=currentDateTime></span></p>
-    </header>
-    <nav id="navSection">
 
-    </nav>
-
-    
-    
-    <div class="jumbotron main">
-                
-            <div class="landingPage col-12 col-md-9 flex-column align-center p-5" id="searchSection">
-              <h4>Weather Search</h4>
-              <form id="searchForm" class="form w-100">
-                <input id="searchInput" class="form-input w-100" type="text" placeholder="Enter City">
-                <button type="button" id="searchBtn">Search</button>
-              </form>
-
-              <div id="recentSearch">
-                
-              </div>
+<body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="77">
+    <nav class="navbar navbar-light navbar-expand-md fixed-top" id="mainNav">
+        <div class="container"><a class="navbar-brand" href="#">WeatherNow.</a><button data-bs-toggle="collapse" class="navbar-toggler navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item nav-link"><a class="nav-link active" href="#about">About</a></li>
+                    <li class="nav-item nav-link"><a class="nav-link" href="#download">News</a></li>
+                    <li class="nav-item nav-link"><a class="nav-link" href="#contact">contact</a></li>
+                </ul>
             </div>
-         
-
-        
-        <div class="container col-10 d-none" id="sixDayForecast">
-            
-            <div class="container" id="currentWeather">
-               <!-- <h2 id="date"></h2>
-                <p>It is currently <span id="temp"></span>°F </p>
-                <p id="highLowTemp"></p>
-                <p>Feels Like: <span id="feelsLike"></span>°F</p>
-                <p>Wind: <span id="windDirection"></span>° @ <span id="windSpeed"></span> MPH</p>
-                <p>Humidity: <span id="humidity"></span>%</p>
-                <img id="weatherImg"></img> -->
-            </div> 
-            <div class="row" id="fiveDayForecast">
-                
-                <div class="forecast card col" id="forecastDay2">
-                    <h2 id="date1"></h2>
-                    <img id="weatherImg1"></img>
-                    <p>Temp: <span class="temp" id="temp1"></span>°F</p>
-                    <p>Wind: <span class="windDirection1" id="windDirection1"></span>° @ <span class="windSpeed" id="windSpeed1"></span> MPH</p>
-                    <p>Humidity: <span class="humidity" id="humidity1"></span>%</p>
-                </div>
-                
-                <div class="forecast card col" id="forecastDay3">
-                    <h2 id="date2"></h2>
-                    <img id="weatherImg2"></img>
-                    <p>Temp: <span id="temp2"></span>°F</p>
-                    <p>Wind: <span id="windDirection2"></span>° @ <span id="windSpeed2"></span> MPH</p>
-                    <p>Humidity: <span id="humidity2"></span>%</p>
-                </div>
-                
-                <div class="forecast card col" id="forecastDay4">
-                    <h2 id="date3"></h2>
-                    <img id="weatherImg3"></img>
-                    <p>Temp: <span id="temp3"></span>°F</p>
-                    <p>Wind: <span id="windDirection3"></span>° @ <span id="windSpeed3"></span> MPH</p>
-                    <p>Humidity: <span id="humidity3"></span>%</p>
-                </div>
-                
-                <div class="forecast card col" id="forecastDay5">
-                    <h2 id="date4"></h2>
-                    <img id="weatherImg4"></img>
-                    <p>Temp: <span id="temp4"></span>°F</p>
-                    <p>Wind: <span id="windDirection4"></span>° @ <span id="windSpeed4"></span> MPH</p>
-                    <p>Humidity: <span id="humidity4"></span>%</p>
-                </div>
-                
-                <div class="forecast card col" id="forecastDay6">
-                    <h2 id="date5"></h2>
-                    <img id="weatherImg5"></img>
-                    <p>Temp: <span id="temp5"></span>°F</p>
-                    <p>Wind: <span id="windDirection5"></span>° @ <span id="windSpeed5"></span> MPH</p>
-                    <p>Humidity: <span id="humidity5"></span>%</p>
+        </div>
+    </nav>
+    <header class="masthead" style="background-image: url('assets/img/intro-bg.jpg');">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <h1 class="brand-heading" style="font-size: 25px;">Current weather</h1>
+                        <div class="intro-text">
+                            <div class="col-2" id="searchSection">
+                                <h4>Weather Search</h4>
+                                <form id="searchForm" class="form w-100">
+                                  <input id="searchInput" class="form-input w-100" type="text" placeholder="Enter City">
+                                  <button type="button" id="searchBtn">Search</button>
+                                </form>
+                              </div>
+                            <div class="container" id="currentWeather">
+                                 <h2 id="date"></h2>
+                                 <p>It is currently <span id="temp"></span>°F </p>
+                                 <p id="highLowTemp"></p>
+                                 <p>Feels Like: <span id="feelsLike"></span>°F</p>
+                                 <p>Wind: <span id="windDirection"></span>° @ <span id="windSpeed"></span> MPH</p>
+                                 <p>Humidity: <span id="humidity"></span>%</p>
+                                 <img id="weatherImg"></img>
+                             </div> 
+                        </div>
+                        <a class="btn btn-link btn-circle" role="button" href="#about">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        
-    </div>
-    <script src="./assets/script.js"></script>
-    
+    </header>
+    <section class="text-center content-section" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Hourly-forecast</h2>
+                    <p>Grayscale is a free Bootstrap theme. It can be yours right now, simply download the template on&nbsp;<a href="#">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+                    <p>This theme features stock photos by&nbsp;<a href="#">Gratisography</a>&nbsp;along with a custom Google Maps skin courtesy of&nbsp;<a href="#">Snazzy Maps</a>.</p>
+                    <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with SASS and LESS files for easy customization!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="text-center download-section content-section" id="download" style="background-image: url('assets/img/downloads-bg.jpg');">
+        <div class="container">
+            <div class="col-lg-8 mx-auto">
+                <h1>10 day forecast</h1>
+                <p>You can download Grayscale for free on the preview page.</p><button class="btn btn-primary btn-lg btn-default" type="button">visit download page</button>
+            </div>
+        </div>
+    </section>
+    <section class="text-center content-section" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Contact us</h2>
+                    <p>Let us know how we can improve your experience.</p>
+                    <ul class="list-inline banner-social-buttons">
+                        <li class="list-inline-item">&nbsp;<button class="btn btn-primary btn-lg btn-default" type="button"><i class="fa fa-google-plus fa-fw"></i><span class="network-name">&nbsp; Google+</span></button></li>
+                        <li class="list-inline-item">&nbsp;<button class="btn btn-primary btn-lg btn-default" type="button"><i class="fa fa-twitter fa-fw"></i><span class="network-name">&nbsp;Twitter</span></button></li>
+                        <li class="list-inline-item">&nbsp;<button class="btn btn-primary btn-lg btn-default" type="button"><i class="fa fa-github fa-fw"></i><span class="network-name">&nbsp;github</span></button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="map-clean"><iframe allowfullscreen="" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA5c1xpbiuij9lBco4_5XWe-5RRWlLb2dI&amp;q=Paris%2C+France&amp;zoom=15" width="100%" height="450"></iframe></div>
+    <footer>
+        <div class="container text-center">
+            <p></p>
+        </div>
+    </footer>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/grayscale.js"></script>
+    <script src="./assets/Zones_Handler.js"></script>
 </body>
+
 </html>

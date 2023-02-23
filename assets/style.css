@@ -26,9 +26,15 @@ border-radius: 5px;
     
 }
 
-#searchSection h4 {
+#searchSection {
 
     padding: 4px; 
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column; 
+    background-color: #855e34;
+    border-radius: 10%;
+    height: 80vh
 
 }
 
@@ -37,18 +43,37 @@ border-radius: 5px;
     color: white;
 }
 
-.landingPage {
 
-    margin-top: 15px;
-    width: 80%;
+#landingPage {
+
     display: flex;
-    justify-content: center;
-    background-color: #855e34;
-    border-radius: 30px;
+
+}
+
+#leftSide {
+
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+   
+    border: solid black;
+
+    
+
+}
+
+#theMiddle {
+
+    height: 50vh;
+    display: flex;
+    border: solid black;
+    flex-direction: column;
+
+}
     
 
     
-}
+
 
 
 #fiveDayForecast {
