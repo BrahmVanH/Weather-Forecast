@@ -179,6 +179,18 @@ function getZoneData(responsibleZonesUrl) {
     })
 }
 
+function getExtendedForecast(observationZone) {
+
+  //Dont forget to switch this value out with the zone from the function that gets the zone
+  let dateAndTime = "2023-02-23T21:3A14:3A10.000-0500"
+  let dateAndTimePlusFive = "end=2023-02-27T21%3A14%3A10.000-0500"
+  let observationZone = "LMZ221"
+  extendedForecastUrl = `https://api.weather.gov/zones/forecast/${observationZone}/observations?start=${dateAndTime}&${dateAndTimePlusFive}&limit=10`
+
+
+
+}
+
 
 
 searchBtn.on('click', submitSearch);
