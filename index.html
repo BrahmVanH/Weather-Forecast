@@ -8,23 +8,29 @@
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/supplementalStyle.css">
 </head>
 
 <body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="77">
-    <nav class="navbar navbar-light navbar-expand-md fixed-top" id="mainNav">
-        <div class="container"><a class="navbar-brand" href="#">WeatherNow.</a><button data-bs-toggle="collapse" class="navbar-toggler navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu"><i class="fa fa-bars"></i></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
+    <nav id="mainNav" class="navbar navbar-light navbar-expand-md fixed-top">
+        <div class="container"><a class="navbar-brand" href="#">WeatherNow.</a><button class="navbar-toggler navbar-toggler-right" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu"><i class="fa fa-bars"></i></button>
+            <div id="navbarResponsive" class="collapse navbar-collapse">
+                <section class="py-4 py-xl-5"></section><i class="fas fa-search"></i>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item nav-link"><a class="nav-link active" href="#about">About</a></li>
                     <li class="nav-item nav-link"><a class="nav-link" href="#download">News</a></li>
                     <li class="nav-item nav-link"><a class="nav-link" href="#contact">contact</a></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
                 </ul>
             </div>
         </div>
     </nav>
+    
     <header class="masthead" style="background-image: url('assets/img/intro-bg.jpg');">
         <div class="intro-body">
             <div class="container">
@@ -32,13 +38,6 @@
                     <div class="col-lg-8 mx-auto">
                         <h1 class="brand-heading" style="font-size: 25px;">Current weather</h1>
                         <div class="intro-text">
-                            <div class="col-2" id="searchSection">
-                                <h4>Weather Search</h4>
-                                <form id="searchForm" class="form w-100">
-                                  <input id="searchInput" class="form-input w-100" type="text" placeholder="Enter City">
-                                  <button type="button" id="searchBtn">Search</button>
-                                </form>
-                              </div>
                             <div class="container" id="currentWeather">
                                  <h2 id="date"></h2>
                                  <p>It is currently <span id="temp"></span>°F </p>

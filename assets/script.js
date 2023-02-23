@@ -33,6 +33,45 @@ function timeUpdate() {
 
 setInterval(timeUpdate, 1000);
 
+function getBrowserLocation() {
+  
+  navigator.geolocation.getCurrentPosition(position => {
+    const { latitude, longitude } = position.coords;
+    if(!position.cords) { 
+      return;
+    } else {
+      getZones(latitude, longitude);
+    }
+    // Show a map centered at latitude / longitude.
+  })
+  
+};
+
+function getBrowserCity(latitude, longitude) {
+
+  
+  
+  var url = apiUrl +'/data/2.5/forecast?lat=' + latitude + '&lon=' + longitude + '&appid=' + apiKey + '&units=imperial';
+  
+  fetch(url)
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data)
+    populateFiveDayForecast(data);
+    // populateCurrentWeather(cityName, data)
+    createCurrentWeatherSection(cityName, data)
+    
+    console.log(data);
+  })
+  .catch(function (err) {
+    console.error(err);
+  });
+
+}
+
+
 // Used an if-statement to retrive local storage items on page 
 
 // Function to scan local storage for search history and populate the page with recent searches
@@ -285,3 +324,4 @@ function useSearchHistory(e) {
 searchBtn.on('click', submitSearch);
 recentSearchEl.on('click', useSearchHistory);
 retrieveHistory();
+getBrowserLocation();

@@ -28,35 +28,16 @@ function submitSearch(event) {
 
 }
 
-function getZones(latitude, longitude) {
-
-    url = "https://api.weather.gov/points/" + latitude + "," + longitude
-
-	
-	
-	fetch(url)
-	.then(function(response) {
-		return response.json();
-		console.log(response);
-      
-		
-    })
-	.then(function(data) {
-		console.log(data);
-    getForecastHourly(data.properties.forecastHourly);
-    getForecastOffice(data.properties.forecastOffice);
-    getForecastZone(data.properties.forecastZone);
-		
-
-		
-    }) 
-	.catch(function(err) {
-		console.error(err);
-    })
-
-}
-
-
+function getBrowserLocation() {
+  console.log("Working on it...")
+  
+  navigator.geolocation.getCurrentPosition(position => {
+    const { latitude, longitude } = position.coords;
+    // Show a map centered at latitude / longitude.
+    getZones(latitude, longitude);
+  })
+  
+};
 
 function getLatLon(search) {
 
@@ -74,11 +55,14 @@ function getLatLon(search) {
         getZones(data[0].lat, data[0].lon);
         return;
       }
-    })
-}
+    });
+};
 
-function getForecastHourly(url) {
+function getZones(latitude, longitude) {
 
+    url = "https://api.weather.gov/points/" + latitude + "," + longitude
+
+	
 	
 	fetch(url)
 	.then(function(response) {
@@ -88,7 +72,10 @@ function getForecastHourly(url) {
 		
     })
 	.then(function(data) {
-		console.log("ForecastHourly: " + data);
+		console.log(data);
+    getForecastHourly(data);
+    getForecastOffice(data);
+    getForecastZones(data.properties.forecastOffice);
 		
 
 		
@@ -99,9 +86,14 @@ function getForecastHourly(url) {
 
 }
 
-function getForecastOffice(foreCastOfficeUrl) {
 
-  fetch(url)
+
+
+function getForecastHourly(zoneData) {
+
+  hourlyForecastUrl = zoneData.properties.forecastHourly
+	
+	fetch(hourlyForecastUrl)
 	.then(function(response) {
 		return response.json();
 		console.log(response);
@@ -109,7 +101,7 @@ function getForecastOffice(foreCastOfficeUrl) {
 		
     })
 	.then(function(data) {
-		console.log("ForecastOffice: " + data);
+		console.log(data)
 		
 
 		
@@ -120,9 +112,33 @@ function getForecastOffice(foreCastOfficeUrl) {
 
 }
 
-function getForecastZone(forecastZoneUrl) {
+function getForecastOffice(zoneData) {
 
-  fetch(forecastZoneUrl)
+  forecastOfficeUrl = zoneData.properties.forecastOffice;
+
+  fetch(forecastOfficeUrl)
+	.then(function(response) {
+		return response.json();
+		console.log(response);
+      
+		
+    })
+	.then(function(data) {
+		console.log("Forecast Office Data...")
+    console.log(data);
+		
+
+		
+    }) 
+	.catch(function(err) {
+		console.error(err);
+    })
+
+}
+
+function getForecastZones(forecastZonesUrl) {
+
+  fetch(forecastZonesUrl)
 	.then(function(response) {
 		return response.json();
 		console.log(response);
@@ -131,7 +147,8 @@ function getForecastZone(forecastZoneUrl) {
     })
 	.then(function(data) {
     console.log(data);
-		console.log("ForecastZone: " + data);
+	
+    getZoneData(data.responsibleForecastZones[0]);
 		
 
 		
@@ -141,4 +158,28 @@ function getForecastZone(forecastZoneUrl) {
     })
 }
 
+function getZoneData(responsibleZonesUrl) {
+  
+  fetch(responsibleZonesUrl)
+	.then(function(response) {
+		return response.json();
+		console.log(response);
+      
+		
+    })
+	.then(function(data) {
+    console.log(data);
+		
+		
+
+		
+    }) 
+	.catch(function(err) {
+		console.error(err);
+    })
+}
+
+
+
 searchBtn.on('click', submitSearch);
+getBrowserLocation();
