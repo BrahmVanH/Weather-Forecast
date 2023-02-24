@@ -1,5 +1,11 @@
-const currentDate = new Date();
-const currentTime = new Date();
+//const currentDate = new Date();
+//const currentTime = new Date();
+const DateTime = luxon.DateTime;
+const currentDate = DateTime.local().toISO
+console.log(currentDate);
+
+const currentTime = DateTime.now().toISO({ format: 'basic' })
+console.log(currentTime);
 
 const openWeatherApiUrl = 'http://api.openweathermap.org';
 const openWeatherApiKey = 'e943c609140455c43be229fc218f1f3a';
@@ -9,7 +15,7 @@ const formEl = $('#searchForm');
 const searchBtn = $('#searchBtn');
 const recentSearchEl = $('#recentSearch')
 const cities = [];
-const date = dayjs().format('MMM D, YYYY');
+//const date = dayjs().format('MMM D, YYYY');
 const currentWeather = $('#currentWeather');
 
 function timeUpdate() {
