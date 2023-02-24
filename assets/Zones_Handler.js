@@ -1,4 +1,5 @@
-const dayjs = require("dayjs");
+const currentDate = new Date();
+const currentTime = new Date();
 
 const openWeatherApiUrl = 'http://api.openweathermap.org';
 const openWeatherApiKey = 'e943c609140455c43be229fc218f1f3a';
@@ -15,6 +16,7 @@ function timeUpdate() {
   const currentDate = dayjs().format('MMM D, YYYY');
   const currentTime = dayjs().format('h:mm:ss a');
   $('#currentDateTime').text(currentTime + ' on ' + currentDate);
+  
 }
 
 setInterval(timeUpdate, 1000);
@@ -41,6 +43,16 @@ function getBrowserLocation() {
   
 };
 
+function getTimezonePlusMinus(longitude) {
+  prefix = longitude.slice(0,1);
+  if(prefix == '-') {
+    return '-'
+  } else {
+  return;
+  }
+  
+}
+
 function getLatLon(search) {
 
     var url = openWeatherApiUrl + '/geo/1.0/direct?q='+ search + '&limit=5&appid=' + openWeatherApiKey;
@@ -64,7 +76,7 @@ function getZones(latitude, longitude) {
 
     url = "https://api.weather.gov/points/" + latitude + "," + longitude
 
-	
+	// This function passes longitude along to getForecastZones, to ultimately send it to getExtendedForecast to determine plus/minus for TZ
 	
 	fetch(url)
 	.then(function(response) {
@@ -77,7 +89,8 @@ function getZones(latitude, longitude) {
 		console.log(data);
     getForecastHourly(data);
     getForecastOffice(data);
-    getForecastZones(data.properties.forecastOffice);
+    console.log(longitude);
+    getForecastZones(data.properties.forecastOffice, longitude);
 		
 
 		
@@ -103,7 +116,8 @@ function getForecastHourly(zoneData) {
 		
     })
 	.then(function(data) {
-		console.log(data)
+		console.log("getForecastHourly")
+    console.log(data)
 		
 
 		
@@ -138,7 +152,7 @@ function getForecastOffice(zoneData) {
 
 }
 
-function getForecastZones(forecastZonesUrl) {
+function getForecastZones(forecastZonesUrl, longitude) {
 
   fetch(forecastZonesUrl)
 	.then(function(response) {
@@ -148,10 +162,11 @@ function getForecastZones(forecastZonesUrl) {
 		
     })
 	.then(function(data) {
-    console.log(data);
-	
-    getZoneData(data.responsibleForecastZones[0]);
+    
+    console.log('getForecastZones');
+    getZoneData(data.responsibleForecastZones[0], longitude);
 		
+    
 
 		
     }) 
@@ -160,7 +175,7 @@ function getForecastZones(forecastZonesUrl) {
     })
 }
 
-function getZoneData(responsibleZonesUrl) {
+function getZoneData(responsibleZonesUrl, longitude) {
   
   fetch(responsibleZonesUrl)
 	.then(function(response) {
@@ -170,7 +185,11 @@ function getZoneData(responsibleZonesUrl) {
 		
     })
 	.then(function(data) {
+    console.log("getZoneData...")
     console.log(data);
+    getExtendedForecast(data.properties.id, longitude);
+
+     
 		
 		
 
@@ -181,20 +200,56 @@ function getZoneData(responsibleZonesUrl) {
     })
 }
 
-function getExtendedForecast(observationZone) {
-       dateAndTime = dayjs().format('YYYY-MM-DDTHH:mm:ss.SSSZZ')
-       dateAndTimePlusFive = dateAndTime.add(9, 'day')
-  //Dont forget to switch this value out with the zone from the function that gets the zone
-  let dateAndTime = "2023-02-23T21:3A14:3A10.000-0500"
-  let dateAndTimePlusFive = "end=2023-02-27T21%3A14%3A10.000-0500"
-  let observationZone = "LMZ221"
-  extendedForecastUrl = `https://api.weather.gov/zones/forecast/${observationZone}/observations?start=${dateAndTime}&${dateAndTimePlusFive}&limit=10`
+function getExtendedForecast(observationZoneId, longitude) {
 
+  const timeZoneOffset = new Date().getTimezoneOffset();
+  const timeZoneOffsetHours = `${getTimezonePlusMinus}0${(timeZoneOffset/60)}00`;
+  const dateFormatted = currentDate.toLocaleString().slice(0, -1);
+  const dateTimePlusFive = new Date().setDate(currentDate.getDate() + 5).toIsoString();
+  const prefix = Math.sign(longitude);
+  let prefixIdentifier = ''
+  
+  
+  if(prefix === -1) {
+    
+    prefixIdentifier = '-';
+  } else {
+    prefixIdentifier = '+';
+  }
+  
+  const dateIso8601 = `${dateFormatted}${prefixIdentifier}${timeZoneOffsetHours}`;
+  
+  extendedForecastUrl = `https://api.weather.gov/zones/forecast/${observationZoneId}/observations?start=${dateIso8601}&${dateTimePlusFive}&limit=10`
 
+  fetch(extendedForecastUrl, {
+      
+    method: 'GET',
+    mode: 'no-cors',
+    cache: 'no-cache', 
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    
+      .then(function(response) {
+      return response.json();
+      console.log(response);
+        
+      
+      })
+    .then(function(data) {
+      console.log("getExtendedForecast...")
+      console.log(data);
+      
+      
+      }) 
+    .catch(function(err) {
+      console.error(err);
+      })
 
 }
 
-
-
+// detailedForecastUrl = "/zones/{type}/{zoneId}/forecast"
 searchBtn.on('click', submitSearch);
-getBrowserLocation();
+getBrowserLocation(); 
