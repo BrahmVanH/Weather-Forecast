@@ -1,4 +1,3 @@
-const DateTime = luxon.DateTime;
 const currentDate = new Date()
 const currentDateIso = currentDate.toISOString();
 const currentDateUser = currentDate.toString();
