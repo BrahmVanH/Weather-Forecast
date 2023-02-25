@@ -1,31 +1,29 @@
-//const currentDate = new Date();
-//const currentTime = new Date();
 const DateTime = luxon.DateTime;
-const currentDate = DateTime.local().toISO
-console.log(currentDate);
+const currentDate = new Date()
+const currentDateIso = currentDate.toISOString();
+const currentDateUser = currentDate.toString();
+console.log(currentDateUser);
+console.log(currentDateIso);
+//const openWeatherApiUrl = 'http://api.openweathermap.org';
+//const openWeatherApiKey = 'e943c609140455c43be229fc218f1f3a';
 
-const currentTime = DateTime.now().toISO({ format: 'basic' })
-console.log(currentTime);
+const dateEl = document.getElementById('date');
+const currentTempEl = document.getElementById('currentTemp');
+const currentHighLowTempEl = document.getElementById('currentHighLowTemp');
+const currentTempFeelEl = document.getElementById('currentTempFeel');
+const currentWindEl = document.getElementById('currentWind');
+const currentHumidity = document.getElementById('currentHumidity');
+const currentWeatherIcon = document.getElementById('currentWeatherImage');
 
-const openWeatherApiUrl = 'http://api.openweathermap.org';
-const openWeatherApiKey = 'e943c609140455c43be229fc218f1f3a';
 
-const cityInputEl = $('#searchInput');
-const formEl = $('#searchForm');
-const searchBtn = $('#searchBtn');
-const recentSearchEl = $('#recentSearch')
-const cities = [];
-//const date = dayjs().format('MMM D, YYYY');
-const currentWeather = $('#currentWeather');
-
-function timeUpdate() {
+/*function timeUpdate() {
   const currentDate = dayjs().format('MMM D, YYYY');
   const currentTime = dayjs().format('h:mm:ss a');
   $('#currentDateTime').text(currentTime + ' on ' + currentDate);
   
-}
+}*/
 
-setInterval(timeUpdate, 1000);
+//setInterval(timeUpdate, 1000);
 
 function submitSearch(event) {
   event.preventDefault();
@@ -49,20 +47,12 @@ function getBrowserLocation() {
   
 };
 
-function getTimezonePlusMinus(longitude) {
-  prefix = longitude.slice(0,1);
-  if(prefix == '-') {
-    return '-'
-  } else {
-  return;
-  }
-  
-}
+
 
 function getLatLon(search) {
 
     var url = openWeatherApiUrl + '/geo/1.0/direct?q='+ search + '&limit=5&appid=' + openWeatherApiKey;
-    fetch(url)
+    fetch(url,  {mode: 'no-cors'})
     .then(function(response) {
       return response.json();
       
@@ -96,8 +86,7 @@ function getZones(latitude, longitude) {
     getForecastHourly(data);
     getForecastOffice(data);
     console.log(longitude);
-    getForecastZones(data.properties.forecastOffice, longitude);
-		
+    getForecastZones(data.properties.forecastOffice);
 
 		
     }) 
@@ -112,7 +101,7 @@ function getZones(latitude, longitude) {
 
 function getForecastHourly(zoneData) {
 
-  hourlyForecastUrl = zoneData.properties.forecastHourly
+  hourlyForecastUrl = zoneData.properties.forecastHourly;
 	
 	fetch(hourlyForecastUrl)
 	.then(function(response) {
@@ -124,6 +113,7 @@ function getForecastHourly(zoneData) {
 	.then(function(data) {
 		console.log("getForecastHourly")
     console.log(data)
+    constructCurrentWeatherHtml(data);
 		
 
 		
@@ -148,6 +138,7 @@ function getForecastOffice(zoneData) {
 	.then(function(data) {
 		console.log("Forecast Office Data...")
     console.log(data);
+    getWorkingZoneId(data);
 		
 
 		
@@ -158,7 +149,7 @@ function getForecastOffice(zoneData) {
 
 }
 
-function getForecastZones(forecastZonesUrl, longitude) {
+function getForecastZones(forecastZonesUrl) {
 
   fetch(forecastZonesUrl)
 	.then(function(response) {
@@ -170,7 +161,7 @@ function getForecastZones(forecastZonesUrl, longitude) {
 	.then(function(data) {
     
     console.log('getForecastZones');
-    getZoneData(data.responsibleForecastZones[0], longitude);
+    getZoneData(data.responsibleForecastZones[0]);
 		
     
 
@@ -181,7 +172,7 @@ function getForecastZones(forecastZonesUrl, longitude) {
     })
 }
 
-function getZoneData(responsibleZonesUrl, longitude) {
+function getZoneData(responsibleZonesUrl) {
   
   fetch(responsibleZonesUrl)
 	.then(function(response) {
@@ -193,7 +184,7 @@ function getZoneData(responsibleZonesUrl, longitude) {
 	.then(function(data) {
     console.log("getZoneData...")
     console.log(data);
-    getExtendedForecast(data.properties.id, longitude);
+    //getExtendedForecast(data.properties.id);
 
      
 		
@@ -206,37 +197,23 @@ function getZoneData(responsibleZonesUrl, longitude) {
     })
 }
 
-function getExtendedForecast(observationZoneId, longitude) {
+function getExtendedForecast(observationZoneId) {
 
-  const timeZoneOffset = new Date().getTimezoneOffset();
-  const timeZoneOffsetHours = `${getTimezonePlusMinus}0${(timeZoneOffset/60)}00`;
-  const dateFormatted = currentDate.toLocaleString().slice(0, -1);
-  const dateTimePlusFive = new Date().setDate(currentDate.getDate() + 5).toIsoString();
-  const prefix = Math.sign(longitude);
-  let prefixIdentifier = ''
-  
-  
-  if(prefix === -1) {
-    
-    prefixIdentifier = '-';
-  } else {
-    prefixIdentifier = '+';
-  }
-  
-  const dateIso8601 = `${dateFormatted}${prefixIdentifier}${timeZoneOffsetHours}`;
-  
-  extendedForecastUrl = `https://api.weather.gov/zones/forecast/${observationZoneId}/observations?start=${dateIso8601}&${dateTimePlusFive}&limit=10`
+  console.log(observationZoneId);
 
-  fetch(extendedForecastUrl, {
-      
-    method: 'GET',
-    mode: 'no-cors',
-    cache: 'no-cache', 
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
+  const currentDatePlusFourDays = new Date(currentDateIso);
+  currentDatePlusFourDays.setDate(currentDatePlusFourDays.getDate() + parseInt(4));
+  const currentDatePlusFourDaysIso = currentDatePlusFourDays.toISOString();
+  
+
+  
+  console.log(currentDatePlusFourDaysIso);
+  extendedForecastUrl = `https://api.weather.gov/zones/forecast/${observationZoneId}/observations?start=${encodeURIComponent(currentDateIso)}&end=${encodeURIComponent(currentDatePlusFourDaysIso)}`
+  //extendedForecastUrlEncoded = extendedForecastUrl.encodeURI();
+  // Url to get forecast for multiple days/nights and their wordy explanations
+  //extendedForecastInWordsUrl = `https://api.weather.gov/zones/${zoneType}/${zoneId}/forecast`
+
+  fetch(extendedForecastUrl)
     
       .then(function(response) {
       return response.json();
@@ -245,7 +222,7 @@ function getExtendedForecast(observationZoneId, longitude) {
       
       })
     .then(function(data) {
-      console.log("getExtendedForecast...")
+      console.log(`getExtendedForecast for ${observationZoneId}`)
       console.log(data);
       
       
@@ -254,8 +231,64 @@ function getExtendedForecast(observationZoneId, longitude) {
       console.error(err);
       })
 
+    }
+
+function getWorkingZoneId(forecastOfficeData) {
+  const responsibleForecastZones = forecastOfficeData.responsibleForecastZones;
+  for(zone of responsibleForecastZones){
+    zoneId = zone.slice(39, 45);
+    console.log(zoneId);
+    console.log(zone);
+
+    runThroughZoneIds(zoneId)
+    console.log(runThroughZoneIds(zoneId));
+  }
 }
 
+const runThroughZoneIds = (zoneIdSamples) => {
+  
+  testZonesUrl = `https://api.weather.gov/zones/forecast/${zoneIdSamples}/stations?limit=500`;
+  fetch(testZonesUrl)
+    .then(function(response) {
+      return response.json();
+      console.log(response);
+    })
+    .then(function(data) {
+
+      if(data.status) {
+        console.log(data.status)
+        return;
+      } else {
+        const forecastZoneUrlOfficial = data.features[0].properties.forecast;
+        const forecastZoneIdOfficial = forecastZoneUrlOfficial.slice(39, 45);
+        getExtendedForecast(forecastZoneIdOfficial);
+      }
+
+      console.log(`Testing Zone ${zoneIdSamples}`);
+      console.log(data);
+      return data;
+    })
+    .catch(function(err) {
+      console.log(err);
+    })
+
+
+
+
+}
+
+function constructCurrentWeatherHtml(hourlyWeatherData) {
+  
+  const hourlyWeatherPath = hourlyWeatherData.properties.periods[0];
+  
+  dateEl.innerHTML = currentDateUser;
+  currentTempEl.innerHTML = `${hourlyWeatherPath.temperature}°F`;
+  currentWindEl.innerHTML = `Wind: ${hourlyWeatherPath.windDirection} @ ${hourlyWeatherPath.windSpeed}`;
+  currentHumidity.innerHTML = `Humidity: ${hourlyWeatherPath.relativeHumidity.value}%`
+
+}
+
+
 // detailedForecastUrl = "/zones/{type}/{zoneId}/forecast"
-searchBtn.on('click', submitSearch);
+
 getBrowserLocation(); 
