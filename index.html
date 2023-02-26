@@ -5,40 +5,144 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Home - WeatherNow.</title>
+   <!-- <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/plugin/utc.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.2.1/build/global/luxon.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/supplementalStyle.css">
 </head>
 
 <body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="77">
-    <nav class="navbar navbar-light navbar-expand-md fixed-top" id="mainNav">
-        <div class="container"><button data-bs-toggle="collapse" class="navbar-toggler navbar-toggler-right" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu"><i class="fa fa-bars"></i></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive" style="display: flex;"><a class="navbar-brand" href="#" style="display: block;">WeatherNow.</a>
+    <nav id="mainNav" class="navbar navbar-light navbar-expand-md fixed-top">
+        <div class="container"><a class="navbar-brand" href="#">WeatherNow.</a><button class="navbar-toggler navbar-toggler-right" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" value="Menu"><i class="fa fa-bars"></i></button>
+            <div id="navbarResponsive" class="collapse navbar-collapse">
+                <section class="py-4 py-xl-5"></section><i class="fas fa-search"></i>
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item nav-link"></li>
-                    <li class="nav-item nav-link"></li>
-                    <li class="nav-item nav-link"></li>
+                    <li class="nav-item nav-link"><a class="nav-link active" href="#about">About</a></li>
+                    <li class="nav-item nav-link"><a class="nav-link" href="#download">News</a></li>
+                    <li class="nav-item nav-link"><a class="nav-link" href="#contact">contact</a></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
                 </ul>
             </div>
         </div>
     </nav>
+    
     <header class="masthead" style="background-image: url('assets/img/intro-bg.jpg');">
         <div class="intro-body">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 mx-auto">
-                        <h1 class="brand-heading">404</h1>
-                        <p class="intro-text">Come Back Soon!</p>
+                        <h1 class="brand-heading" style="font-size: 25px;">Current weather</h1>
+                        <div class="intro-text">
+                            <div class="container" id="currentWeather">
+                                 <h2 id="date"></h2>
+                                 <p id="currentTemp"><span id="currentHighLowTemp"></span></p>
+                                 <p id="currentTempFeel"></p>
+                                 <p id="currentWind"></p>
+                                 <p id="currentHumidity"></p>
+                                 <img id="currentWeatherImg"></img>
+                                 
+                             </div> 
+                        </div>
+                        <a class="btn btn-link btn-circle" role="button" href="#about">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-    <div class="map-clean"></div>
-    <footer></footer>
+    <section class="text-center content-section" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Hourly-forecast</h2>
+                    <p>Grayscale is a free Bootstrap theme. It can be yours right now, simply download the template on&nbsp;<a href="#">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+                    <p>This theme features stock photos by&nbsp;<a href="#">Gratisography</a>&nbsp;along with a custom Google Maps skin courtesy of&nbsp;<a href="#">Snazzy Maps</a>.</p>
+                    <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with SASS and LESS files for easy customization!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="text-center content-section" id="download" style="background-image: url('assets/img/downloads-bg.jpg');">
+        <div class="container">
+            <div class="col-lg-8 mx-auto">
+                <h1>10 day forecast</h1>
+                <div class="row" id="fiveDayForecast">
+            
+                    <div class="forecast card col" id="forecastDay2">
+                        <h2 id="date1"></h2>
+                        <img id="weatherImg1"></img>
+                        <p>Temp: <span class="temp" id="temp1"></span>°F</p>
+                        <p>Wind: <span class="windDirection1" id="windDirection1"></span>° @ <span class="windSpeed" id="windSpeed1"></span> MPH</p>
+                        <p>Humidity: <span class="humidity" id="humidity1"></span>%</p>
+                    </div>
+                    
+                    <div class="forecast card col" id="forecastDay3">
+                        <h2 id="date2"></h2>
+                        <img id="weatherImg2"></img>
+                        <p>Temp: <span id="temp2"></span>°F</p>
+                        <p>Wind: <span id="windDirection2"></span>° @ <span id="windSpeed2"></span> MPH</p>
+                        <p>Humidity: <span id="humidity2"></span>%</p>
+                    </div>
+                    
+                    <div class="forecast card col" id="forecastDay4">
+                        <h2 id="date3"></h2>
+                        <img id="weatherImg3"></img>
+                        <p>Temp: <span id="temp3"></span>°F</p>
+                        <p>Wind: <span id="windDirection3"></span>° @ <span id="windSpeed3"></span> MPH</p>
+                        <p>Humidity: <span id="humidity3"></span>%</p>
+                    </div>
+                    
+                    <div class="forecast card col" id="forecastDay5">
+                        <h2 id="date4"></h2>
+                        <img id="weatherImg4"></img>
+                        <p>Temp: <span id="temp4"></span>°F</p>
+                        <p>Wind: <span id="windDirection4"></span>° @ <span id="windSpeed4"></span> MPH</p>
+                        <p>Humidity: <span id="humidity4"></span>%</p>
+                    </div>
+                    
+                    <div class="forecast card col" id="forecastDay6">
+                        <h2 id="date5"></h2>
+                        <img id="weatherImg5"></img>
+                        <p>Temp: <span id="temp5"></span>°F</p>
+                        <p>Wind: <span id="windDirection5"></span>° @ <span id="windSpeed5"></span> MPH</p>
+                        <p>Humidity: <span id="humidity5"></span>%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="text-center content-section" id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>Contact us</h2>
+                    <p>Let us know how we can improve your experience.</p>
+                    <ul class="list-inline banner-social-buttons">
+                        <li class="list-inline-item">&nbsp;<button class="btn btn-primary btn-lg btn-default" type="button"><i class="fa fa-google-plus fa-fw"></i><span class="network-name">&nbsp; Google+</span></button></li>
+                        <li class="list-inline-item">&nbsp;<button class="btn btn-primary btn-lg btn-default" type="button"><i class="fa fa-twitter fa-fw"></i><span class="network-name">&nbsp;Twitter</span></button></li>
+                        <li class="list-inline-item">&nbsp;<button class="btn btn-primary btn-lg btn-default" type="button"><i class="fa fa-github fa-fw"></i><span class="network-name">&nbsp;github</span></button></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--<div class="map-clean"><iframe allowfullscreen="" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA5c1xpbiuij9lBco4_5XWe-5RRWlLb2dI&amp;q=Paris%2C+France&amp;zoom=15" width="100%" height="450"></iframe></div>-->
+    <footer>
+        <div class="container text-center">
+            <p></p>
+        </div>
+    </footer>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/grayscale.js"></script>
+    <script src="./assets/Zones_Handler.js"></script>
 </body>
 
 </html>

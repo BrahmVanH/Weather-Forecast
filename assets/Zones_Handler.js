@@ -37,11 +37,16 @@ function submitSearch(event) {
 
 function getBrowserLocation() {
   console.log("Working on it...")
+
   
   navigator.geolocation.getCurrentPosition(position => {
     const { latitude, longitude } = position.coords;
     // Show a map centered at latitude / longitude.
     getZones(latitude, longitude);
+
+    console.log(`${latitude}${longitude}`);
+
+    return;
   })
   
 };
