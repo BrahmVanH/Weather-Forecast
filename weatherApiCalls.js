@@ -2,14 +2,6 @@ const currentDate = new Date()
 const currentDateIso = currentDate.toISOString();
 const currentDateUser = currentDate.toString();
 
-const dateEl = document.getElementById('date');
-const currentTempEl = document.getElementById('currentTemp');
-const currentHighLowTempEl = document.getElementById('currentHighLowTemp');
-const currentTempFeelEl = document.getElementById('currentTempFeel');
-const currentWindEl = document.getElementById('currentWind');
-const currentHumidity = document.getElementById('currentHumidity');
-const currentWeatherIcon = document.getElementById('currentWeatherImage');
-
 
 // WeatherAPI request url/endpoint
 const weatherApiUrl = 'https://api.weatherapi.com/v1'
@@ -64,39 +56,86 @@ const getCurrentWeather = (userLocation) => {
             return response.json();
         })
         .then(function(data) {
-            console.log(`10 day forecast for ${userLocation}`);
+            console.log(`All data for next 10 days`);
             console.log(data);
+            console.log(`5 day forecast for ${userLocation}`);
+            console.log(data.forecast);
+            console.log(`Current weather for ${userLocation}`);
+            console.log(data.current);
           //  handleCurrentWeather(data.current);
             handleIndividualDayForecast(data.forecast.forecastday);
+            handleTodaysWeatherData(data);
         })
 }
 
-const handleCurrentWeather = (currentForecast) => {
+const handleTodaysWeatherData = (fiveDayForecast) => {
 
-    currentForecast.condition.icon //Current condition icon ie "cdn.weather.../night/..."
-    currentForecast.condition.text //current condition text ie "clear"
-    currentForecast.feelslike_c //Current "feel" temp. Weird that it's not camelCase
-    currentForecast.feelslike_f 
-    currentForecast.gust_kph 
-    currentForecast.gust_mph
-    currentForecast.currentHumidity
-    currentForecast.is_day // Binary 
-    currentForecast.last_updated //"xxxx-xx-xx xx:xx"
-    currentForecast.precip_in
-    currentForecast.precip_mm
-    currentForecast.pressure_in //pressure in inches
-    currentForecast.pressure_mb //Pressure in millibar
-    currentForecast.temp_c 
-    currentForecast.temp_f
-    currentForecast.wind_dir // "ssw" cardinal wind direction
-    currentForecast.wind_kph
-    currentForecast.wind_mph
+    currentConditionsIcon = fiveDayForecast.current.condition.icon //Current condition icon ie "cdn.weather.../night/..."
+    currentConditionsText = fiveDayForecast.current.condition.text //current condition text ie "clear"
+    currentFeelsLikeC = fiveDayForecast.current.feelslike_c //Current "feel" temp. Weird that it's not camelCase
+    currentFeelsLikeF = fiveDayForecast.current.feelslike_f         
+    currentGustKph = fiveDayForecast.current.gust_kph        
+    currentGustMph = fiveDayForecast.current.gust_mph        
+    currentHumidity = fiveDayForecast.current.currentHumidity     
+    currentIsDayBin = fiveDayForecast.current.is_day // Binary        
+    currentLastUpdateTime = fiveDayForecast.current.last_updated //"xxxx-xx-xx xx:xx"       
+    currentPrecipInch = fiveDayForecast.current.precip_in       
+    currentPrecipMilli = fiveDayForecast.current.precip_mm       
+    currentPressureInch = fiveDayForecast.current.pressure_in //pressure in inches        
+    currentPressureMilli = fiveDayForecast.current.pressure_mb //Pressure in millibar      
+    currentTempC = fiveDayForecast.current.temp_c      
+    currentTempF = fiveDayForecast.current.temp_f      
+    currentWindDir = fiveDayForecast.current.wind_dir // "ssw" cardinal wind direction       
+    currentWindKph = fiveDayForecast.current.wind_kph        
+    currentWindMph = fiveDayForecast.current.wind_mph  
+    todayHighTempC = fiveDayForecast.forecast.forecastday[0].day.maxtemp_c;
+    todayHighTempF = fiveDayForecast.forecast.forecastday[0].day.maxtemp_f;
+    todayLowTempC = fiveDayForecast.forecast.forecastday[0].day.mintemp_c;
+    todayLowTempF = fiveDayForecast.forecast.forecastday[0].day.mintemp_f;
+    willItSnow = fiveDayForecast.forecast.forecastday[0].day.daily_will_it_snow; //Binary
+    willItRain = fiveDayForecast.forecast.forecastday[0].day.daily_will_it_rain; //Binary
+    chanceOfPrecip = getChanceOfPrecip(willItRain, willItSnow);
+
+    const currentWeatherHtml = `
+        <div class="col-md-4" style="padding: 12px;">
+            <h1 style="font-size: .75em;">${currentDateUser}</h1>
+            <p style="font-size: .5em;width: 100%;">${todayHighTempF}/${todayLowTempF}<br/>${currentTempF}°F<br/>Feels Like ${currentFeelsLikeF}</p>
+            <p style="font-size: .5em;width: 100%;">*Little Wind Icon* ${currentWindDir} @ ${currentWindMph} (${currentGustMph})</p>
+            <p style="font-size: .5em;width: 100%;"></p>
+            <p style="font-size: .5em;width: 100%;">$currentConditionsText}</p>
+        </div>
+        <div class="col-md-4" style="padding: 15px 12px;">
+            <p style="font-size: .5em;width: 100%;">${currentConditionsIcon}</p>
+            <p style="font-size: .5em;width: 100%;">${chanceOfPrecip}% Chance of precipitation</p>
+            <p style="font-size: .5em;width: 100%;">${currentHumidity}% humidity</p>
+        </div>
+        
+    `
+    
+    console.log('passing current weather html to document');
+    appendCurrentForecastHtml(currentWeatherHtml);
 
 
 }
 
+const getChanceOfPrecip = (willItRain, willItSnow) => {
+   
+    if(willItRain === 1) {
+        chanceOfPrecip = fiveDayForecast.forecast.forecastday[0].day.daily_chance_of_rain;
+    } else if (willItSnow === 1) {
+        chanceOfPrecip = fiveDayForecast.forecast.forecastday[0].day.daily_chance_of_snow;
+
+    } else {
+        chanceOfPrecip = '0';
+    }
+
+    return chanceOfPrecip;
+}
+
+
 const handleIndividualDayForecast = (forecastDays) => {
 
+    
         for(const day of forecastDays) {
         sunriseTime = day.astro.sunrise //sunrise time "xx:xx xM"
         sunsetTime = day.astro.sunset //sunset time ^^
@@ -112,22 +151,8 @@ const handleIndividualDayForecast = (forecastDays) => {
         maxWindMph = day.day.maxwind_mph;
         minTempC = day.day.mintemp_c;
         minTempF = day.day.mintemp_f;
+        dayOfWeek = getDayOfWeek(dayDigitOfWeek);
 
-        if(dayDigitOfWeek === 0) {
-            dayOfWeek = "Sunday";
-        } else if(dayDigitOfWeek === 1) {
-            dayOfWeek = "Saturday";
-        } else if(dayDigitOfWeek === 2) {
-            dayOfWeek = "Friday";
-        } else if(dayDigitOfWeek === 3) {
-            dayOfWeek = "Thursday";
-        } else if(dayDigitOfWeek === 4) {
-            dayOfWeek = "Wednesday";
-        } else if(dayDigitOfWeek === 5) {
-            dayOfWeek = "Tuesday";
-        } else if(dayDigitOfWeek === 6) {
-            dayOfWeek = "Monday";
-        }
        // uvIndex = day.day.uv make an animated image for this
         
     //  isGoingToSnow()... day.day.daily_will_it_snow .. if(yes)... day.day.daily_chance_of_snow ...if(yes) day.day.totalsnow_cm (convert to imperial when needed);
@@ -135,7 +160,7 @@ const handleIndividualDayForecast = (forecastDays) => {
     // Option to add hourly information too. 
     
 
-        const forecastCard = `
+        const extendedForecastCard = `
         
         <div class="forecast card col">
             <div class="card-header">
@@ -150,14 +175,48 @@ const handleIndividualDayForecast = (forecastDays) => {
                 <p>Sunset: ${sunsetTime}</p>    
             </div>
             <div class="card-footer"></div>
-        </div>`
-
-        const tenDayForecastEl = document.getElementById('tenDayForecast');
-        tenDayForecastEl.insertAdjacentHTML("afterBegin", forecastCard);
+        </div>`  
+        appendExtendedForecastHtml(extendedForecastCard);
     }
 
 
-    console.log()
+}
+
+const getDayOfWeek = (dayDigitOfWeek) => {
+    
+    if(dayDigitOfWeek === 0) {
+        dayOfWeek = "Sunday";
+    } else if(dayDigitOfWeek === 1) {
+        dayOfWeek = "Saturday";
+    } else if(dayDigitOfWeek === 2) {
+        dayOfWeek = "Friday";
+    } else if(dayDigitOfWeek === 3) {
+        dayOfWeek = "Thursday";
+    } else if(dayDigitOfWeek === 4) {
+        dayOfWeek = "Wednesday";
+    } else if(dayDigitOfWeek === 5) {
+        dayOfWeek = "Tuesday";
+    } else if(dayDigitOfWeek === 6) {
+        dayOfWeek = "Monday";
+    }
+
+    return dayOfWeek;
+}
+
+const appendExtendedForecastHtml = (extendedForecastHtml) => {
+
+    const tenDayForecastEl = document.getElementById('tenDayForecast');
+    tenDayForecastEl.insertAdjacentHTML("afterBegin", extendedForecastHtml);
+    console.log('appending extended forecast...')
+
+}
+
+const appendCurrentForecastHtml = (currentWeatherHtml) => {
+
+    console.log('appeding current weather...')
+
+    const currentWeatherEl = document.getElementById('currentWeather');
+    currentWeatherEl.insertAdjacentHTML("afterBegin", currentWeatherHtml);
 }
 
 

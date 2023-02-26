@@ -65,46 +65,17 @@ header {
 }
     
 
-    
-
-
-
-#fiveDayForecast {
-
-    display: flex; 
-
-}
-
-#currentWeather {
-
-    background-color: #9e7f5d;
-    border-radius: 5px;
-}
-
-#fiveDayForecast .card {
-
-    height: 15rem;
-    background-color:#855e34 ; 
-    margin: 3px;
-    border-bottom-right-radius: 40%;
-    border-top-left-radius: 8%;
-
-}
 
 .forecast {
 
     background-color: black;
     color: white;
+    box-shadow: 0px 5px 20px grey;
 }
 
-.forecast .card-body {
 
-    opacity: 0%
+.forecast div {
+    box-shadow: 0px 3px grey;
+
 }
-
-.forecast .card-body p {
-
-    opacity: 100%;
-}
-
 

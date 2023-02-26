@@ -38,28 +38,29 @@
         <div class="intro-body">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 mx-auto">
-                        <h1 class="brand-heading" style="font-size: 25px;">Current weather</h1>
-                        <div class="intro-text">
-                            <div class="container" id="currentWeather">
-                                 <h2 id="date"></h2>
-                                 <p id="currentTemp"><span id="currentHighLowTemp"></span></p>
-                                 <p id="currentTempFeel"></p>
-                                 <p id="currentWind"></p>
-                                 <p id="currentHumidity"></p>
-                                 <img id="currentWeatherImg"></img>
-                                 
-                             </div> 
-                        </div>
-                        <a class="btn btn-link btn-circle" role="button" href="#about">
-                            <i class="fa fa-angle-double-down animated"></i>
-                        </a>
+                    <div class="col-lg-8 mx-auto" >
+                        <h1 class="brand-heading" style="font-size: 25px;">Currently</h1>
+                        <div class="row d-flex justify-content-center" id="currentWeather">
+                            
+                        </div> 
                     </div>
                 </div>
             </div>
+            <a class="btn btn-link btn-circle" role="button" href="#tenDayForecast">
+                <i class="fa fa-angle-double-down animated"></i>
+            </a>
         </div>
     </header>
-    <section class="text-center content-section" id="about">
+    <section class="text-center content-section" id="download">
+        <div class="container">
+            <div class="col-lg-8 mx-auto">
+                <h1>Extended</h1>
+                <div class="d-flex flex-wrap" id="tenDayForecast">
+                </div>
+            </div>
+        </div>
+    </section> <!--
+    <section class="text-center content-section" id="about" style="background-image: url('assets/img/downloads-bg.jpg');">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
@@ -70,92 +71,7 @@
                 </div>
             </div>
         </div>
-    </section>
-    <section class="text-center content-section" id="download" style="background-image: url('assets/img/downloads-bg.jpg');">
-        <div class="container">
-            <div class="col-lg-8 mx-auto">
-                <h1>10 day forecast</h1>
-                <div class="d-flex flex-wrap" id="tenDayForecast">
-            
-                <!--    <div class="forecast card col" id="forecastDay2">
-                        <h2 id="forecastDay1"></h2>
-                        <img id="weatherImg1"></img>
-                        <p>Temp: <span class="temp" id="temp1"></span>°F</p>
-                        <p>Wind: <span class="windDirection1" id="windDirection1"></span>° @ <span class="windSpeed" id="windSpeed1"></span> MPH</p>
-                        <p>Humidity: <span class="humidity" id="humidity1"></span>%</p>
-                    </div>
-                    
-                    <div class="forecast card col" id="forecastDay3">
-                        <h2 id="forecastDay2"></h2>
-                        <img id="weatherImg2"></img>
-                        <p>Temp: <span id="temp2"></span>°F</p>
-                        <p>Wind: <span id="windDirection2"></span>° @ <span id="windSpeed2"></span> MPH</p>
-                        <p>Humidity: <span id="humidity2"></span>%</p>
-                    </div>
-                    
-                    <div class="forecast card col" id="forecastDay4">
-                        <h2 id="forecastDay3"></h2>
-                        <img id="weatherImg3"></img>
-                        <p>Temp: <span id="temp3"></span>°F</p>
-                        <p>Wind: <span id="windDirection3"></span>° @ <span id="windSpeed3"></span> MPH</p>
-                        <p>Humidity: <span id="humidity3"></span>%</p>
-                    </div>
-                    
-                    <div class="forecast card col" id="forecastDay5">
-                        <h2 id="forecastDay4"></h2>
-                        <img id="weatherImg4"></img>
-                        <p>Temp: <span id="temp4"></span>°F</p>
-                        <p>Wind: <span id="windDirection4"></span>° @ <span id="windSpeed4"></span> MPH</p>
-                        <p>Humidity: <span id="humidity4"></span>%</p>
-                    </div>
-                    
-                    <div class="forecast card col" id="forecastDay6">
-                        <h2 id="forecastDay5"></h2>
-                        <img id="weatherImg5"></img>
-                        <p>Temp: <span id="temp5"></span>°F</p>
-                        <p>Wind: <span id="windDirection5"></span>° @ <span id="windSpeed5"></span> MPH</p>
-                        <p>Humidity: <span id="humidity5"></span>%</p>
-                    </div>
-                    <div class="forecast card col" id="forecastDay6">
-                        <h2 id="forecastDay6"></h2>
-                        <img id="weatherImg6"></img>
-                        <p>Temp: <span id="temp6"></span>°F</p>
-                        <p>Wind: <span id="windDirection6"></span>° @ <span id="windSpeed6"></span> MPH</p>
-                        <p>Humidity: <span id="humidity6"></span>%</p>
-                    </div>
-                    <div class="forecast card col" id="forecastDay6">
-                        <h2 id="forecastDay7"></h2>
-                        <img id="weatherImg7"></img>
-                        <p>Temp: <span id="temp7"></span>°F</p>
-                        <p>Wind: <span id="windDirection7"></span>° @ <span id="windSpeed7"></span> MPH</p>
-                        <p>Humidity: <span id="humidity7"></span>%</p>
-                    </div>
-                    <div class="forecast card col" id="forecastDay6">
-                        <h2 id="forecastDay8"></h2>
-                        <img id="weatherImg8"></img>
-                        <p>Temp: <span id="temp8"></span>°F</p>
-                        <p>Wind: <span id="windDirection8"></span>° @ <span id="windSpeed8"></span> MPH</p>
-                        <p>Humidity: <span id="humidity8"></span>%</p>
-                    </div>
-                    <div class="forecast card col" id="forecastDay6">
-                        <h2 id="forecastDay9"></h2>
-                        <img id="weatherImg9"></img>
-                        <p>Temp: <span id="temp9"></span>°F</p>
-                        <p>Wind: <span id="windDirection9"></span>° @ <span id="windSpeed9"></span> MPH</p>
-                        <p>Humidity: <span id="humidity9"></span>%</p>
-                    </div>
-                    <div class="forecast card col" id="forecastDay6">
-                        <h2 id="forecastDay10"></h2>
-                        <img id="weatherImg10"></img>
-                        <p>Temp: <span id="temp10"></span>°F</p>
-                        <p>Wind: <span id="windDirection10"></span>° @ <span id="windSpeed10"></span> MPH</p>
-                        <p>Humidity: <span id="humidity10"></span>%</p>
-                    </div> 
-                -->
-                </div>
-            </div>
-        </div>
-    </section>
+    </section> -->
     <section class="text-center content-section" id="contact">
         <div class="container">
             <div class="row">
