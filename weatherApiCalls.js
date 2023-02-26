@@ -10,6 +10,7 @@ const currentWindEl = document.getElementById('currentWind');
 const currentHumidity = document.getElementById('currentHumidity');
 const currentWeatherIcon = document.getElementById('currentWeatherImage');
 
+
 // WeatherAPI request url/endpoint
 const weatherApiUrl = 'https://api.weatherapi.com/v1'
 
@@ -64,7 +65,91 @@ const getCurrentWeather = (userLocation) => {
         .then(function(data) {
             console.log(`10 day forecast for ${userLocation}`);
             console.log(data);
+            handleCurrentWeather(data.current);
+            handleIndividualDayForecast(data.forecastday);
         })
+}
+
+const handleCurrentWeather = (currentForecast) => {
+
+    currentForecast.condition.icon //Current condition icon ie "cdn.weather.../night/..."
+    currentForecast.condition.text //current condition text ie "clear"
+    currentForecast.feelslike_c //Current "feel" temp. Weird that it's not camelCase
+    currentForecast.feelslike_f 
+    currentForecast.gust_kph 
+    currentForecast.gust_mph
+    currentForecast.currentHumidity
+    currentForecast.is_day // Binary 
+    currentForecast.last_updated //"xxxx-xx-xx xx:xx"
+    currentForecast.precip_in
+    currentForecast.precip_mm
+    currentForecast.pressure_in //pressure in inches
+    currentForecast.pressure_mb //Pressure in millibar
+    currentForecast.temp_c 
+    currentForecast.temp_f
+    currentForecast.wind_dir // "ssw" cardinal wind direction
+    currentForecast.wind_kph
+    currentForecast.wind_mph
+
+
+}
+
+const handleIndividualDayForecast = (forecastDays) => {
+
+        for(const day of forecastDays) {
+        sunriseTime = day.astro.sunrise //sunrise time "xx:xx xM"
+        sunsetTime = day.astro.sunset //sunset time ^^
+        dayOfWeek = new Date(day.date).getDay();
+        avgHumidity = day.day.avghumidity;
+        avgTempC = day.day.avgtemp_c;
+        avgTempF = day.day.avgtemp_f;
+        conditionIconUrl = day.day.condition;
+        conditionIcon = day.day.condition.text //"cloudy"
+        maxTempC = day.day.maxtemp_c;
+        maxTempF = day.day.maxtemp_f;
+        maxWindKph = day.day.maxwind_kph;
+        maxWindMph = day.day.maxwind_mph;
+        minTempC = day.day.mintemp_c;
+        minTempF = day.day.mintemp_f;
+       // uvIndex = day.day.uv make an animated image for this
+        
+    //  isGoingToSnow()... day.day.daily_will_it_snow .. if(yes)... day.day.daily_chance_of_snow ...if(yes) day.day.totalsnow_cm (convert to imperial when needed);
+    //  isGoingToRain()... day.day.daily_will_it_rain ... if(yes)... day.day.daily_chance_of_rain ...if(yes)  day.day.totalprecip_in/day.day.totalprecip_mm
+    // Option to add hourly information too. 
+        const extendedForecastCard = document.createElement('div class=forecast card col');
+        const forecastDayOfWeek = document.createElement('h2');
+        const forecastWeatherIcon = document.createElement('img');
+        const forecastTemperatureEl
+
+    }
+
+    console.log()
+}
+
+
+
+
+const handleTenDayWeather = (tenDayForecast) => {
+
+    
+    tenDayForecast.condition.icon //Current condition icon ie "cdn.weather.../night/..."
+    tenDayForecast.condition.text //current condition text ie "clear"
+    tenDayForecast.feelslike_c //Current "feel" temp. Weird that it's not camelCase
+    tenDayForecast.feelslike_f 
+    tenDayForecast.gust_kph 
+    tenDayForecast.gust_mph
+    tenDayForecast.currentHumidity
+    tenDayForecast.is_day // Binary 
+    tenDayForecast.last_updated //"xxxx-xx-xx xx:xx"
+    tenDayForecast.precip_in
+    tenDayForecast.precip_mm
+    tenDayForecast.pressure_in //pressure in inches
+    tenDayForecast.pressure_mb //Pressure in millibar
+    tenDayForecast.temp_c 
+    tenDayForecast.temp_f
+    tenDayForecast.wind_dir // "ssw" cardinal wind direction
+    tenDayForecast.wind_kph
+    tenDayForecast.wind_mph
 }
 
 getBrowserLocation();
