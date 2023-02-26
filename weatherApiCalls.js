@@ -48,10 +48,11 @@ const formatBrowserLocation = (browserLatitude, browserLongitude) => {
     console.log(`formatted browser location: ${browserLatitudeLongitude}`);  
     getCurrentWeather(browserLatitudeLongitude);
 }
+// Heads up, WeatherAPI uses all lowercase for it's content names. 
 
 const getCurrentWeather = (userLocation) => {
     
-    forecastEndpoint = `/forecast.json?key=222a7016242f4bf6b57214612232502&q=${userLocation}&days=10`;
+    forecastEndpoint = `/forecast.json?key=222a7016242f4bf6b57214612232502&q=${userLocation}&days=5`;
 
     console.log(`fetching 10 day forecast...`);
 
@@ -65,8 +66,8 @@ const getCurrentWeather = (userLocation) => {
         .then(function(data) {
             console.log(`10 day forecast for ${userLocation}`);
             console.log(data);
-            handleCurrentWeather(data.current);
-            handleIndividualDayForecast(data.forecastday);
+          //  handleCurrentWeather(data.current);
+            handleIndividualDayForecast(data.forecast.forecastday);
         })
 }
 
@@ -99,7 +100,7 @@ const handleIndividualDayForecast = (forecastDays) => {
         for(const day of forecastDays) {
         sunriseTime = day.astro.sunrise //sunrise time "xx:xx xM"
         sunsetTime = day.astro.sunset //sunset time ^^
-        dayOfWeek = new Date(day.date).getDay();
+        dayDigitOfWeek = new Date(day.date).getDay();
         avgHumidity = day.day.avghumidity;
         avgTempC = day.day.avgtemp_c;
         avgTempF = day.day.avgtemp_f;
@@ -111,46 +112,69 @@ const handleIndividualDayForecast = (forecastDays) => {
         maxWindMph = day.day.maxwind_mph;
         minTempC = day.day.mintemp_c;
         minTempF = day.day.mintemp_f;
+
+        if(dayDigitOfWeek === 0) {
+            dayOfWeek = "Sunday";
+        } else if(dayDigitOfWeek === 1) {
+            dayOfWeek = "Saturday";
+        } else if(dayDigitOfWeek === 2) {
+            dayOfWeek = "Friday";
+        } else if(dayDigitOfWeek === 3) {
+            dayOfWeek = "Thursday";
+        } else if(dayDigitOfWeek === 4) {
+            dayOfWeek = "Wednesday";
+        } else if(dayDigitOfWeek === 5) {
+            dayOfWeek = "Tuesday";
+        } else if(dayDigitOfWeek === 6) {
+            dayOfWeek = "Monday";
+        }
        // uvIndex = day.day.uv make an animated image for this
         
     //  isGoingToSnow()... day.day.daily_will_it_snow .. if(yes)... day.day.daily_chance_of_snow ...if(yes) day.day.totalsnow_cm (convert to imperial when needed);
     //  isGoingToRain()... day.day.daily_will_it_rain ... if(yes)... day.day.daily_chance_of_rain ...if(yes)  day.day.totalprecip_in/day.day.totalprecip_mm
     // Option to add hourly information too. 
-        const extendedForecastCard = document.createElement('div class=forecast card col');
-        const forecastDayOfWeek = document.createElement('h2');
-        const forecastWeatherIcon = document.createElement('img');
-        const forecastTemperatureEl
+    
 
+        const forecastCard = `
+        
+        <div class="forecast card col">
+            <div class="card-header">
+                <h5 class="mb-0">${dayOfWeek}</h5>
+            </div>
+            <div class="card-body">
+            <!--<img src="${conditionIcon}"></img>-->
+                <p>${avgTempF}°F (${maxTempF}°/${minTempF}°)</p>
+                <p>*wind icon*Gotta call the api again to get wind info</p>
+                <p>${avgHumidity}% Humidity</p>
+                <p>Sunrise: ${sunriseTime}</p>
+                <p>Sunset: ${sunsetTime}</p>    
+            </div>
+            <div class="card-footer"></div>
+        </div>`
+
+        const tenDayForecastEl = document.getElementById('tenDayForecast');
+        tenDayForecastEl.insertAdjacentHTML("afterBegin", forecastCard);
     }
+
 
     console.log()
 }
 
 
-
-
-const handleTenDayWeather = (tenDayForecast) => {
-
-    
-    tenDayForecast.condition.icon //Current condition icon ie "cdn.weather.../night/..."
-    tenDayForecast.condition.text //current condition text ie "clear"
-    tenDayForecast.feelslike_c //Current "feel" temp. Weird that it's not camelCase
-    tenDayForecast.feelslike_f 
-    tenDayForecast.gust_kph 
-    tenDayForecast.gust_mph
-    tenDayForecast.currentHumidity
-    tenDayForecast.is_day // Binary 
-    tenDayForecast.last_updated //"xxxx-xx-xx xx:xx"
-    tenDayForecast.precip_in
-    tenDayForecast.precip_mm
-    tenDayForecast.pressure_in //pressure in inches
-    tenDayForecast.pressure_mb //Pressure in millibar
-    tenDayForecast.temp_c 
-    tenDayForecast.temp_f
-    tenDayForecast.wind_dir // "ssw" cardinal wind direction
-    tenDayForecast.wind_kph
-    tenDayForecast.wind_mph
-}
+/*<div class=" forecast card col">
+    <div class="card-header">
+        <h5 class="mb-0">${dayOfWeek}</h5>
+    </div>
+    <div class="card-body">
+    <!--<img src="${conditionIcon}"></img>-->
+        <p>${avgTempF}°F (${maxTempF}°/${minTempF}°)</p>
+        <p>*wind icon*Gotta call the api again to get wind info</p>
+        <p>${avgHumidity}% Humidity</p>
+        <p>Sunrise: ${sunriseTime}</p>
+        <p>Sunset: ${sunsetTime}</p>    
+    </div>
+    <div class="card-footer"></div>
+</div>*/
 
 getBrowserLocation();
 

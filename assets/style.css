@@ -91,15 +91,20 @@ header {
 
 }
 
-.forecast img {
+.forecast {
 
-    height: 50px;
-    width: 50px;
+    background-color: black;
+    color: white;
+}
+
+.forecast .card-body {
+
+    opacity: 0%
+}
+
+.forecast .card-body p {
+
+    opacity: 100%;
 }
 
 
-.card p {
-
-    border-bottom-right-radius: 5%;
-    border-top-left-radius: 5%
-}
