@@ -1,7 +1,3 @@
-* {
-    font-family: 'Comfortaa', cursive;
-    font-family: 'Quicksand', sans-serif;
-}
 
 header {
 
@@ -9,63 +5,11 @@ header {
     background-color: black;
 }
 
-
-.main {
-    display: flex;
-    justify-content: center;
-    
-
+#currentWeather {
+    font-size: 1.75em
 }
 
-
-
-#searchSection {
-
-    padding: 4px; 
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column; 
-    background-color: #855e34;
-    border-radius: 10%;
-    height: 80vh
-
-}
-
-#searchBtn {
-    background-color: rgb(98, 18, 23, .5);
-    color: white;
-}
-
-
-#landingPage {
-
-    display: flex;
-
-}
-
-#leftSide {
-
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-   
-    border: solid black;
-
-    
-
-}
-
-#theMiddle {
-
-    height: 50vh;
-    display: flex;
-    border: solid black;
-    flex-direction: column;
-
-}
-    
-
-
+#currentWeather 
 .forecast {
 
     background-color: black;

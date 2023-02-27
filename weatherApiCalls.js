@@ -1,7 +1,7 @@
 const currentDate = new Date()
 const currentDateIso = currentDate.toISOString();
 const currentDateUser = currentDate.toString();
-
+const currentWeatherEl = document.getElementById('currentWeather');
 
 // WeatherAPI request url/endpoint
 const weatherApiUrl = 'https://api.weatherapi.com/v1'
@@ -70,8 +70,7 @@ const getCurrentWeather = (userLocation) => {
 
 const handleTodaysWeatherData = (fiveDayForecast) => {
 
-    currentConditionsIcon = fiveDayForecast.current.condition.icon //Current condition icon ie "cdn.weather.../night/..."
-    currentConditionsText = fiveDayForecast.current.condition.text //current condition text ie "clear"
+    currentConditionsText = fiveDayForecast.current.condition.text; //current condition text ie "clear"
     currentFeelsLikeC = fiveDayForecast.current.feelslike_c //Current "feel" temp. Weird that it's not camelCase
     currentFeelsLikeF = fiveDayForecast.current.feelslike_f         
     currentGustKph = fiveDayForecast.current.gust_kph        
@@ -95,17 +94,19 @@ const handleTodaysWeatherData = (fiveDayForecast) => {
     willItSnow = fiveDayForecast.forecast.forecastday[0].day.daily_will_it_snow; //Binary
     willItRain = fiveDayForecast.forecast.forecastday[0].day.daily_will_it_rain; //Binary
     chanceOfPrecip = getChanceOfPrecip(willItRain, willItSnow);
+    currentConditionsIconCode = fiveDayForecast.current.condition.icon.slice(-7, -4); //Current condition icon code
+    currentConditionsIconPath = dayOrNightIconSwitch(currentConditionsIconCode, currentIsDayBin);
 
     const currentWeatherHtml = `
         <div class="col-md-4" style="padding: 12px;">
-            <h1 style="font-size: .75em;">${currentDateUser}</h1>
+            <h1 style="font-size: .5em;">${currentDateUser}</h1>
             <p style="font-size: .5em;width: 100%;">${todayHighTempF}/${todayLowTempF}<br/>${currentTempF}°F<br/>Feels Like ${currentFeelsLikeF}</p>
             <p style="font-size: .5em;width: 100%;">*Little Wind Icon* ${currentWindDir} @ ${currentWindMph} (${currentGustMph})</p>
             <p style="font-size: .5em;width: 100%;"></p>
             <p style="font-size: .5em;width: 100%;">$currentConditionsText}</p>
         </div>
         <div class="col-md-4" style="padding: 15px 12px;">
-            <p style="font-size: .5em;width: 100%;">${currentConditionsIcon}</p>
+            <p style="font-size: .5em;width: 100%;" src="https:${currentConditionsIconPath}"></p>
             <p style="font-size: .5em;width: 100%;">${chanceOfPrecip}% Chance of precipitation</p>
             <p style="font-size: .5em;width: 100%;">${currentHumidity}% humidity</p>
         </div>
@@ -122,7 +123,7 @@ const getChanceOfPrecip = (willItRain, willItSnow) => {
    
     if(willItRain === 1) {
         chanceOfPrecip = fiveDayForecast.forecast.forecastday[0].day.daily_chance_of_rain;
-    } else if (willItSnow === 1) {
+    } else if(willItSnow === 1) {
         chanceOfPrecip = fiveDayForecast.forecast.forecastday[0].day.daily_chance_of_snow;
 
     } else {
@@ -132,11 +133,37 @@ const getChanceOfPrecip = (willItRain, willItSnow) => {
     return chanceOfPrecip;
 }
 
+const getNightConditionsIcon = (iconCode) => {
+
+    currentConditionsIconPath = `./assets/images/night_icons/${iconCode}.svg`;
+    
+};
+
+const getDayConditionsIcon = (iconCode) => {
+    
+    currentConditionsIconPath = `./assets/images/day_icons/${iconCode}.svg`;
+    
+};
+
+const dayOrNightIconSwitch = (isDayBin, iconCode) => {
+
+    switch (isDayBin) {
+        case 0:
+            console.log("getting night icons...");
+            iconPath = getNightConditionsIcon(iconCode);
+            break;
+        case 1:
+            console.log("getting day icons...");
+            iconPath = getDayConditionsIcon(iconCode);
+            break; 
+    };  
+};
+
 
 const handleIndividualDayForecast = (forecastDays) => {
 
     
-        for(const day of forecastDays) {
+    for(const day of forecastDays) {
         sunriseTime = day.astro.sunrise //sunrise time "xx:xx xM"
         sunsetTime = day.astro.sunset //sunset time ^^
         dayDigitOfWeek = new Date(day.date).getDay();
@@ -160,7 +187,7 @@ const handleIndividualDayForecast = (forecastDays) => {
     // Option to add hourly information too. 
     
 
-        const extendedForecastCard = `
+    const extendedForecastCard = `
         
         <div class="forecast card col">
             <div class="card-header">
@@ -176,6 +203,7 @@ const handleIndividualDayForecast = (forecastDays) => {
             </div>
             <div class="card-footer"></div>
         </div>`  
+       
         appendExtendedForecastHtml(extendedForecastCard);
     }
 
@@ -184,20 +212,28 @@ const handleIndividualDayForecast = (forecastDays) => {
 
 const getDayOfWeek = (dayDigitOfWeek) => {
     
-    if(dayDigitOfWeek === 0) {
-        dayOfWeek = "Sunday";
-    } else if(dayDigitOfWeek === 1) {
-        dayOfWeek = "Saturday";
-    } else if(dayDigitOfWeek === 2) {
-        dayOfWeek = "Friday";
-    } else if(dayDigitOfWeek === 3) {
-        dayOfWeek = "Thursday";
-    } else if(dayDigitOfWeek === 4) {
-        dayOfWeek = "Wednesday";
-    } else if(dayDigitOfWeek === 5) {
-        dayOfWeek = "Tuesday";
-    } else if(dayDigitOfWeek === 6) {
-        dayOfWeek = "Monday";
+    switch (dayDigitOfWeek) {
+        case 0:
+            dayOfWeek = "Sunday";
+            break;
+        case 1:
+            dayOfWeek = "Saturday";
+            break;
+        case 2:
+            dayOfWeek = "Friday";
+            break;
+        case 3:
+            dayOfWeek = "Thursday";
+            break;
+        case 4:
+            dayOfWeek = "Wednesday";
+            break;
+        case 5:
+            dayOfWeek = "Tuesday";
+            break;
+        case 6:
+            dayOfWeek = "Monday";
+            break;
     }
 
     return dayOfWeek;
@@ -214,8 +250,6 @@ const appendExtendedForecastHtml = (extendedForecastHtml) => {
 const appendCurrentForecastHtml = (currentWeatherHtml) => {
 
     console.log('appeding current weather...')
-
-    const currentWeatherEl = document.getElementById('currentWeather');
     currentWeatherEl.insertAdjacentHTML("afterBegin", currentWeatherHtml);
 }
 
