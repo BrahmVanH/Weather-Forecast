@@ -9,7 +9,6 @@ header {
     font-size: 1.75em
 }
 
-#currentWeather 
 .forecast {
 
     background-color: black;
@@ -17,9 +16,9 @@ header {
     box-shadow: 0px 5px 20px grey;
 }
 
-
 .forecast div {
     box-shadow: 0px 3px grey;
+    background-color: black;
 
 }
 
