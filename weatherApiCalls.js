@@ -100,7 +100,7 @@ const handleTodaysWeatherData = (fiveDayForecast) => {
     const currentWeatherHtml = `
         <div class="col-md-4" style="padding: 12px;">
             <h1 style="font-size: .5em;">${currentDateUser}</h1>
-            <p style="font-size: .5em;width: 100%;">${todayHighTempF}/${todayLowTempF}<br/>${currentTempF}°F<br/>Feels Like ${currentFeelsLikeF}</p>
+            <p style="font-size: .5em;width: 100%;">(${todayHighTempF}°F/${todayLowTempF}°F)<br/>${currentTempF}°F<br/>Feels Like ${currentFeelsLikeF}</p>
             <p style="font-size: .5em;width: 100%;">${currentWindDir} @ ${currentWindMph} (${currentGustMph})</p>
             <p style="font-size: .5em;width: 100%;"></p>
             <p style="font-size: .5em;width: 100%;">$currentConditionsText}</p>
