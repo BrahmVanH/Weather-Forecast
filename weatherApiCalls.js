@@ -93,21 +93,21 @@ const handleTodaysWeatherData = (fiveDayForecast) => {
     todayLowTempF = fiveDayForecast.forecast.forecastday[0].day.mintemp_f;
     willItSnow = fiveDayForecast.forecast.forecastday[0].day.daily_will_it_snow; //Binary
     willItRain = fiveDayForecast.forecast.forecastday[0].day.daily_will_it_rain; //Binary
-    chanceOfPrecip = getChanceOfPrecip(willItRain, willItSnow);
+ //   chanceOfPrecip = getChanceOfPrecip(willItRain, willItSnow);
     currentConditionsIconCode = fiveDayForecast.current.condition.icon.slice(-7, -4); //Current condition icon code
-    currentConditionsIconPath = dayOrNightIconSwitch(currentConditionsIconCode, currentIsDayBin);
+   // currentConditionsIconPath = dayOrNightIconSwitch(currentConditionsIconCode, currentIsDayBin, fiveDayForecast);
 
     const currentWeatherHtml = `
         <div class="col-md-4" style="padding: 12px;">
             <h1 style="font-size: .5em;">${currentDateUser}</h1>
             <p style="font-size: .5em;width: 100%;">${todayHighTempF}/${todayLowTempF}<br/>${currentTempF}°F<br/>Feels Like ${currentFeelsLikeF}</p>
-            <p style="font-size: .5em;width: 100%;">*Little Wind Icon* ${currentWindDir} @ ${currentWindMph} (${currentGustMph})</p>
+            <p style="font-size: .5em;width: 100%;">${currentWindDir} @ ${currentWindMph} (${currentGustMph})</p>
             <p style="font-size: .5em;width: 100%;"></p>
             <p style="font-size: .5em;width: 100%;">$currentConditionsText}</p>
         </div>
         <div class="col-md-4" style="padding: 15px 12px;">
-            <p style="font-size: .5em;width: 100%;" src="https:${currentConditionsIconPath}"></p>
-            <p style="font-size: .5em;width: 100%;">${chanceOfPrecip}% Chance of precipitation</p>
+            <p style="font-size: .5em;width: 100%;" src="https:"></p>
+            <p style="font-size: .5em;width: 100%;"> Chance of precipitation</p>
             <p style="font-size: .5em;width: 100%;">${currentHumidity}% humidity</p>
         </div>
         
@@ -119,7 +119,7 @@ const handleTodaysWeatherData = (fiveDayForecast) => {
 
 }
 
-const getChanceOfPrecip = (willItRain, willItSnow) => {
+const getChanceOfPrecip = (willItRain, willItSnow, fiveDayForecast) => {
    
     if(willItRain === 1) {
         chanceOfPrecip = fiveDayForecast.forecast.forecastday[0].day.daily_chance_of_rain;
