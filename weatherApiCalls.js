@@ -189,13 +189,13 @@ const handleIndividualDayForecast = (forecastDays) => {
 
     const extendedForecastCard = `
         
-        <div class="forecast card col">
+        <div class="forecast card col" id="forecastCard">
             <div class="card-header">
                 <h5 class="mb-0">${dayOfWeek}</h5>
             </div>
             <div class="card-body">
             <!--<img src="${conditionIcon}"></img>-->
-                <p>${avgTempF}°F (${maxTempF}°/${minTempF}°)</p>
+                <p>${avgTempF}°F (${maxTempF}°F/${minTempF}°F)</p>
              <!--<p>*wind icon*Gotta call the api again to get wind info</p> -->
                 <p>${avgHumidity}% Humidity</p>
                 <p>Sunrise: ${sunriseTime}</p>

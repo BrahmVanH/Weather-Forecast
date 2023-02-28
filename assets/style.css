@@ -9,7 +9,7 @@ header {
     font-size: 1.75em
 }
 
-.forecast card col {
+#forecastCard {
 
     background-color: black;
     color: white;
