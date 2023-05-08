@@ -75,7 +75,7 @@ const handleTodaysWeatherData = (fiveDayForecast) => {
     currentFeelsLikeF = fiveDayForecast.current.feelslike_f         
     currentGustKph = fiveDayForecast.current.gust_kph        
     currentGustMph = fiveDayForecast.current.gust_mph        
-    currentHumidity = fiveDayForecast.current.currentHumidity     
+    currentHumidity = fiveDayForecast.current.humidity     
     currentIsDayBin = fiveDayForecast.current.is_day // Binary        
     currentLastUpdateTime = fiveDayForecast.current.last_updated //"xxxx-xx-xx xx:xx"       
     currentPrecipInch = fiveDayForecast.current.precip_in       
@@ -103,17 +103,16 @@ const handleTodaysWeatherData = (fiveDayForecast) => {
             <p style="font-size: .5em;width: 100%;">(${todayHighTempF}°F/${todayLowTempF}°F)<br/>${currentTempF}°F<br/>Feels Like ${currentFeelsLikeF}</p>
             <p style="font-size: .5em;width: 100%;">${currentWindDir} @ ${currentWindMph} (${currentGustMph})</p>
             <p style="font-size: .5em;width: 100%;"></p>
-            <p style="font-size: .5em;width: 100%;">$currentConditionsText}</p>
+            <p style="font-size: .5em;width: 100%;">${currentConditionsText}</p>
         </div>
         <div class="col-md-4" style="padding: 15px 12px;">
             <p style="font-size: .5em;width: 100%;" src="https:"></p>
-            <p style="font-size: .5em;width: 100%;"> Chance of precipitation</p>
+            
             <p style="font-size: .5em;width: 100%;">${currentHumidity}% humidity</p>
         </div>
         
-    `
+    `;
     
-    console.log('passing current weather html to document');
     appendCurrentForecastHtml(currentWeatherHtml);
 
 
